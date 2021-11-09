@@ -1,8 +1,9 @@
 .header {
   display: flex;
   flex-direction: column;
-  row-gap: calc((41vw / 1280) * 100);
+  row-gap: calc((41vw / var(--max-width)) * 100);
   width: 100%;
-  max-width: calc((880vw / 1280) * 100);
+  max-width: 880px;
   margin: 0 auto;
+  padding-top: calc((45vw / var(--max-width)) * 100);
 }

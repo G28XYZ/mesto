@@ -4,12 +4,15 @@
   height: 24px;
   background-color: #000;
   border: 1px solid #fff;
+  align-self: center;
+  cursor: pointer;
 }
 
 .profile__edit-button:before {
   content: "";
   position: absolute;
   background-image: url(../../../images/bg-edit-btn.svg);
+  background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   transform: translate(-50%, -50%);
