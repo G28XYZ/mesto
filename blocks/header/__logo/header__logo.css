@@ -1,0 +1,3 @@
+.header__logo {
+  width: calc((142vw / 1280) * 100);
+}
