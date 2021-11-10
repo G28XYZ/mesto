@@ -1,9 +1,15 @@
 .header {
   display: flex;
   flex-direction: column;
-  row-gap: calc((41vw / var(--max-width)) * 100);
+  row-gap: 41px;
   width: 100%;
   max-width: 880px;
   margin: 0 auto;
-  padding-top: calc((45vw / var(--max-width)) * 100);
+  padding-top: 45px;
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    padding-top: 28px;
+  }
 }

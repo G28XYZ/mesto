@@ -4,6 +4,6 @@
   column-gap: 20px;
   padding: 25px 15px 31px 21px;
   align-items: center;
-  max-width: 246px;
   width: 100%;
+  box-sizing: border-box;
 }

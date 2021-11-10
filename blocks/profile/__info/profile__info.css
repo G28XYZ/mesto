@@ -5,4 +5,14 @@
   row-gap: 16px;
   column-gap: 25px;
   align-content: center;
+  width: max-content;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__info {
+    padding-top: 22px;
+    padding-bottom: 36px;
+    row-gap: 14px;
+    column-gap: 10px;
+  }
 }
