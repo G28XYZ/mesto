@@ -8,6 +8,7 @@
   border: none;
   background-color: #fff;
   cursor: pointer;
+  margin: 0;
 }
 
 .place__like:hover {
