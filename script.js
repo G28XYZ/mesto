@@ -13,8 +13,8 @@ editProfile.addEventListener("click", function () {
   jobInput.value = jobProfile.textContent;
 });
 
-let saveProfile = popup.querySelector(".popup__save");
-saveProfile.addEventListener("click", function (evt) {
+let formPopup = popup.querySelector(".popup__form");
+formPopup.addEventListener("submit", function (evt) {
   evt.preventDefault();
   popup.classList.remove("popup_opened");
   nameProfile.textContent = nameInput.value;

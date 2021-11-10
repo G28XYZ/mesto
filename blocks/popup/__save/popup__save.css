@@ -17,5 +17,6 @@
   .popup__save {
     font-size: 14px;
     line-height: calc(17 / 14);
+    height: 46px;
   }
 }

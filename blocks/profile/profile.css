@@ -8,15 +8,21 @@
   margin: 0 auto;
   padding-top: 40px;
   padding-bottom: 51px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 1024px) {
+  .profile {
+    padding-left: 19px;
+    padding-right: 19px;
+  }
 }
 
 @media screen and (max-width: 768px) {
   .profile {
     display: flex;
     flex-direction: column;
-    padding-left: 19px;
-    padding-right: 19px;
-    padding-top: 42px;
+    padding-top: 33px;
     padding-bottom: 36px;
     box-sizing: border-box;
   }

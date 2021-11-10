@@ -12,6 +12,98 @@
   </head>
   <body>
     <div class="page">
+      <header class="header">
+        <img src="./images/mesto-logo.svg" alt="" class="header__logo" />
+        <div class="header__line"></div>
+      </header>
+
+      <div class="content">
+        <section class="profile">
+          <img src="./images/avatar.jpg" alt="Аватар" class="profile__avatar" />
+          <div class="profile__info">
+            <div class="profile__heading">
+              <h2 class="profile__name">Александр</h2>
+              <button class="profile__edit-button"></button>
+            </div>
+            <p class="profile__job">Студент</p>
+          </div>
+          <button class="profile__add-button"></button>
+        </section>
+
+        <section class="gallery">
+          <div class="place">
+            <img
+              src="./images/spasskie-dvorci.jpeg"
+              alt="Спасские дворцы"
+              class="place__image"
+            />
+            <div class="place__row">
+              <p class="place__title">Спасск</p>
+              <button class="place__like"></button>
+            </div>
+          </div>
+          <div class="place">
+            <img
+              src="./images/krest-sheregesh.jpeg"
+              alt="Поклонный крест - Шерегеш"
+              class="place__image"
+            />
+            <div class="place__row">
+              <p class="place__title">Шерегеш</p>
+              <button class="place__like"></button>
+            </div>
+          </div>
+          <div class="place">
+            <img
+              src="./images/eysk.jpeg"
+              alt="город Ейск - Ейская коса (фото)"
+              class="place__image"
+            />
+            <div class="place__row">
+              <p class="place__title">Ейск</p>
+              <button class="place__like"></button>
+            </div>
+          </div>
+          <div class="place">
+            <img
+              src="./images/tom-tomsk.jpeg"
+              alt="река Томь, Томск"
+              class="place__image"
+            />
+            <div class="place__row">
+              <p class="place__title">Томск</p>
+              <button class="place__like"></button>
+            </div>
+          </div>
+          <div class="place">
+            <img
+              src="./images/novosibirsk-obi.jpeg"
+              alt="Новосибирск"
+              class="place__image"
+            />
+            <div class="place__row">
+              <p class="place__title">Новосибирск</p>
+              <button class="place__like"></button>
+            </div>
+          </div>
+          <div class="place">
+            <img
+              src="./images/monino.jpeg"
+              alt="Центральный музей Военно-воздушных сил - Монино"
+              class="place__image"
+            />
+            <div class="place__row">
+              <p class="place__title">Монино</p>
+              <button class="place__like"></button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <footer class="footer">
+        <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+      </footer>
+      <!-- popup -->
       <div class="popup">
         <div class="popup__container">
           <button class="popup__close"></button>
@@ -23,96 +115,6 @@
           </form>
         </div>
       </div>
-
-      <header class="header">
-        <img src="./images/mesto-logo.svg" alt="" class="header__logo" />
-        <div class="header__line"></div>
-      </header>
-
-      <div class="content">
-        <section class="profile">
-          <img src="./images/avatar.jpg" alt="Аватар" class="profile__avatar" />
-          <div class="profile__info">
-            <h2 class="profile__name">Жак-Ив Кусто</h2>
-            <button class="profile__edit-button"></button>
-            <p class="profile__job">Исследователь океана</p>
-          </div>
-          <button class="profile__add-button"></button>
-        </section>
-
-        <section class="gallery">
-          <div class="place">
-            <img
-              src="./images/kirill-pershin-1404681-unsplash.jpg"
-              alt=""
-              class="place__image"
-            />
-            <div class="place__row">
-              <p class="place__title">Карачаевск</p>
-              <button class="place__like"></button>
-            </div>
-          </div>
-          <div class="place">
-            <img
-              src="./images/kirill-pershin-1404681-unsplash.jpg"
-              alt=""
-              class="place__image"
-            />
-            <div class="place__row">
-              <p class="place__title">Карачаевск</p>
-              <button class="place__like"></button>
-            </div>
-          </div>
-          <div class="place">
-            <img
-              src="./images/kirill-pershin-1404681-unsplash.jpg"
-              alt=""
-              class="place__image"
-            />
-            <div class="place__row">
-              <p class="place__title">Карачаевск</p>
-              <button class="place__like"></button>
-            </div>
-          </div>
-          <div class="place">
-            <img
-              src="./images/kirill-pershin-1404681-unsplash.jpg"
-              alt=""
-              class="place__image"
-            />
-            <div class="place__row">
-              <p class="place__title">Карачаевск</p>
-              <button class="place__like"></button>
-            </div>
-          </div>
-          <div class="place">
-            <img
-              src="./images/kirill-pershin-1404681-unsplash.jpg"
-              alt=""
-              class="place__image"
-            />
-            <div class="place__row">
-              <p class="place__title">Карачаевск</p>
-              <button class="place__like"></button>
-            </div>
-          </div>
-          <div class="place">
-            <img
-              src="./images/kirill-pershin-1404681-unsplash.jpg"
-              alt="Карачаевск"
-              class="place__image"
-            />
-            <div class="place__row">
-              <p class="place__title">Карачаевск</p>
-              <button class="place__like"></button>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <footer class="footer">
-        <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
-      </footer>
     </div>
     <script src="script.js"></script>
   </body>
