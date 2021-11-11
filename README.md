@@ -1,17 +1,24 @@
-# Проект: Место
+# Проект: Mesto
 
-### Обзор
+## О сайте
 
-* Figma
-* Картинки
+Сервис [Mesto](https://g28xyz.github.io/mesto/ "Ссылка на сайт"): интерактивная страница, куда можно добавлять фотографии, удалять их и ставить лайки
 
-**Figma**
+## О проекте и технологиях разработки
 
-* [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
+В разработке проекта использовались следующие веб-технологии:
 
-**Картинки**
+- Flexbox
+- Grid
+- БЭМ
+- Javascript <img align="left" alt="JavaScript" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/javascript/javascript.png" />
 
-Доставать картинки предстоит из Фигмы. Это расхожая практика, поэтому полезно потренироваться.
-Не забудьте [оптимизировать картинки](https://tinypng.com/), чтобы ваш сайт загружался быстрее.
+## Планы по доработке
 
-Удачи!
+Добавить favicon.ico сайта.
+
+## License
+
+Free
+
+[![Alex Kucher](https://img.shields.io/badge/Powered%20by-Alex%20Kucher-green?style=plastic)](https://github.com/G28XYZ)
