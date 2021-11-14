@@ -1,4 +1,13 @@
 .profile__heading {
-  position: relative;
   display: flex;
+  align-items: baseline;
+  column-gap: 20px;
+  align-self: end;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__heading {
+    padding-top: 14px;
+    column-gap: 10px;
+  }
 }

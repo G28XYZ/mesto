@@ -1,7 +1,6 @@
-.popup__name {
+.popup__input {
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  margin-bottom: 22px;
   padding-bottom: 8px;
   padding-top: 8px;
   font-size: 14px;
@@ -9,9 +8,21 @@
   outline-color: dodgerblue;
 }
 
+.popup__input:first-child {
+  margin-bottom: 22px;
+}
+
+.popup__input:nth-last-child(2) {
+  margin-bottom: 50px;
+}
+
 @media screen and (max-width: 768px) {
-  .popup__name {
+  .popup__input {
     font-size: 14px;
     line-height: calc(17 / 14);
+  }
+
+  .popup__input:nth-last-child(2) {
+    margin-bottom: 45px;
   }
 }

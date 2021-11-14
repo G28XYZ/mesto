@@ -4,6 +4,9 @@
   line-height: calc(29 / 24);
   font-weight: 900;
   margin: 0;
+  width: 80%;
+  flex-basis: auto;
   text-overflow: ellipsis;
   white-space: nowrap;
+  overflow: hidden;
 }
