@@ -7,12 +7,10 @@
   background-color: #fff;
   border-radius: 10px;
   padding: 36px;
-  margin-top: 195px;
 }
 
 @media screen and (max-width: 768px) {
   .popup__container {
-    margin-top: 123px;
     padding: 25px 22px;
     max-width: 282px;
   }
