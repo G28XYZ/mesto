@@ -1,4 +1,4 @@
-.popup__save {
+.popup__submit {
   background-color: #000;
   border: none;
   color: #fff;
@@ -10,13 +10,13 @@
   cursor: pointer;
 }
 
-.popup__save:hover {
+.popup__submit:hover {
   opacity: 0.8;
   transition: opacity 0.6s;
 }
 
 @media screen and (max-width: 768px) {
-  .popup__save {
+  .popup__submit {
     font-size: 14px;
     line-height: calc(17 / 14);
     height: 46px;
