@@ -10,6 +10,10 @@ const namePlaceAdd = popupAdd.querySelector(".popup__input_elem_name-place");
 const linkAdd = popupAdd.querySelector(".popup__input_elem_link");
 const formAdd = popupAdd.querySelector(".popup__form");
 
+const popupImageContainer = document.querySelector(
+  ".popup__container_type_image"
+);
+
 // селекторы секции profile
 const profile = document.querySelector(".profile");
 const nameProfile = profile.querySelector(".profile__name");
@@ -67,18 +71,35 @@ function editFormSubmit(evt) {
   closePopup();
 }
 
+function openPopupImage(evt) {
+  let popupImage = popupImageContainer.parentElement;
+  popupImage.classList.add("popup_opened");
+
+  console.log(evt.target.alt);
+  popupImageContainer.querySelector(".popup__image").src = evt.target.src;
+  popupImageContainer.querySelector(".popup__subtitle").textContent =
+    evt.target.alt;
+}
+
 function addCard(place) {
   const card = placeTemplate.querySelector(".place").cloneNode(true);
+  let cardImage = card.querySelector(".place__image");
 
   card
     .querySelector(".place__like")
     .addEventListener("click", (evt) =>
-      evt.target.classList.add("place__like_active")
+      evt.target.classList.toggle("place__like_active")
     );
 
+  card
+    .querySelector(".place__delete")
+    .addEventListener("click", () => card.remove());
+
   card.querySelector(".place__title").textContent = place.name;
-  card.querySelector(".place__image").src = place.link;
-  card.querySelector(".place__image").alt = place.name;
+
+  cardImage.src = place.link;
+  cardImage.alt = place.name;
+  cardImage.addEventListener("click", openPopupImage);
 
   gallery.prepend(card);
 }
@@ -89,7 +110,6 @@ function addCardPopup() {
 
 function addFormSubmit(evt) {
   evt.preventDefault();
-
   addCard({ name: namePlaceAdd.value, link: linkAdd.value });
   namePlaceAdd.value = "";
   linkAdd.value = "";

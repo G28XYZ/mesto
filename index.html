@@ -57,6 +57,11 @@
     <template id="place-template">
       <article class="place">
         <img src="" alt="" class="place__image" />
+        <button
+          aria-label="Удалить"
+          type="button"
+          class="place__delete"
+        ></button>
         <div class="place__row">
           <h2 class="place__title"></h2>
           <button aria-label="Лайк" type="button" class="place__like"></button>
@@ -123,6 +128,18 @@
             class="popup__submit"
           />
         </form>
+      </div>
+    </div>
+
+    <div class="popup">
+      <div class="popup__container popup__container_type_image">
+        <button
+          aria-label="Закрыть"
+          type="button"
+          class="popup__close"
+        ></button>
+        <img src="" alt="" class="popup__image" />
+        <p class="popup__subtitle"></p>
       </div>
     </div>
 
