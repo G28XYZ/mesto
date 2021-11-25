@@ -60,8 +60,10 @@ function closePopup() {
   document.querySelector(".popup_opened").classList.remove("popup_opened");
 }
 
-function editProfile() {
+function openEditProfilePopup() {
   popupEdit.classList.add("popup_opened");
+  nameEdit.value = nameProfile.textContent;
+  jobEdit.value = jobProfile.textContent;
 }
 
 function editFormSubmit(evt) {
@@ -74,8 +76,6 @@ function editFormSubmit(evt) {
 function openPopupImage(evt) {
   let popupImage = popupImageContainer.parentElement;
   popupImage.classList.add("popup_opened");
-
-  console.log(evt.target.alt);
   popupImageContainer.querySelector(".popup__image").src = evt.target.src;
   popupImageContainer.querySelector(".popup__subtitle").textContent =
     evt.target.alt;
@@ -104,7 +104,7 @@ function addCard(place) {
   gallery.prepend(card);
 }
 
-function addCardPopup() {
+function openAddCardPopup() {
   popupAdd.classList.add("popup_opened");
 }
 
@@ -116,8 +116,8 @@ function addFormSubmit(evt) {
   closePopup();
 }
 
-profileEditButton.addEventListener("click", editProfile);
-cardAddButton.addEventListener("click", addCardPopup);
+profileEditButton.addEventListener("click", openEditProfilePopup);
+cardAddButton.addEventListener("click", openAddCardPopup);
 
 formEdit.addEventListener("submit", editFormSubmit);
 formAdd.addEventListener("submit", addFormSubmit);
