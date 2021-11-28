@@ -17,7 +17,7 @@ const initialCards = [
   },
   {
     name: "Волгоград",
-    link: "./images/vogograd.jpg",
+    link: "./images/volgograd.jpg",
   },
   {
     name: "Алтай",
