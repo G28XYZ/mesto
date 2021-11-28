@@ -1,3 +1,30 @@
+const initialCards = [
+  {
+    name: "Москва",
+    link: "./images/moskva.jpg",
+  },
+  {
+    name: "Шерегеш",
+    link: "./images/sheregesh.jpg",
+  },
+  {
+    name: "Новосибирск",
+    link: "./images/novosibirsk.jpg",
+  },
+  {
+    name: "Томск",
+    link: "./images/tomsk.jpg",
+  },
+  {
+    name: "Волгоград",
+    link: "./images/vogograd.jpg",
+  },
+  {
+    name: "Алтай",
+    link: "./images/altai.jpg",
+  },
+];
+
 // селекторы попапа - редактировать профиль
 const popupEdit = document.querySelector(".popup_type_edit");
 const nameEdit = popupEdit.querySelector(".popup__input_elem_name");
@@ -27,41 +54,16 @@ const gallery = document.querySelector(".gallery");
 
 const popupCloseButtons = document.querySelectorAll(".popup__close");
 
-const initialCards = [
-  {
-    name: "Москва",
-    link: "./images/moskva.jpg",
-  },
-  {
-    name: "Шерегеш",
-    link: "./images/sheregesh.jpg",
-  },
-  {
-    name: "Новосибирск",
-    link: "./images/novosibirsk.jpg",
-  },
-  {
-    name: "Томск",
-    link: "./images/tomsk.jpg",
-  },
-  {
-    name: "Волгоград",
-    link: "./images/vogograd.jpg",
-  },
-  {
-    name: "Алтай",
-    link: "./images/altai.jpg",
-  },
-];
+function render() {
+  initialCards.forEach((place) => addCard(place));
+}
 
-initialCards.forEach((place) => addCard(place));
-
-function closePopup() {
-  document.querySelector(".popup_opened").classList.remove("popup_opened");
+function togglePopup(selector) {
+  selector.classList.toggle("popup_opened");
 }
 
 function openEditProfilePopup() {
-  popupEdit.classList.add("popup_opened");
+  togglePopup(popupEdit);
   nameEdit.value = nameProfile.textContent;
   jobEdit.value = jobProfile.textContent;
 }
@@ -70,12 +72,12 @@ function editFormSubmit(evt) {
   evt.preventDefault();
   nameProfile.textContent = nameEdit.value;
   jobProfile.textContent = jobEdit.value;
-  closePopup();
+  togglePopup(popupEdit);
 }
 
 function openPopupImage(evt) {
   let popupImage = popupImageContainer.parentElement;
-  popupImage.classList.add("popup_opened");
+  togglePopup(popupImage);
   popupImageContainer.querySelector(".popup__image").src = evt.target.src;
   popupImageContainer.querySelector(".popup__subtitle").textContent =
     evt.target.alt;
@@ -105,15 +107,15 @@ function addCard(place) {
 }
 
 function openAddCardPopup() {
-  popupAdd.classList.add("popup_opened");
+  togglePopup(popupAdd);
+  namePlaceAdd.value = "";
+  linkAdd.value = "";
 }
 
 function addFormSubmit(evt) {
   evt.preventDefault();
   addCard({ name: namePlaceAdd.value, link: linkAdd.value });
-  namePlaceAdd.value = "";
-  linkAdd.value = "";
-  closePopup();
+  togglePopup(popupAdd);
 }
 
 profileEditButton.addEventListener("click", openEditProfilePopup);
@@ -123,5 +125,9 @@ formEdit.addEventListener("submit", editFormSubmit);
 formAdd.addEventListener("submit", addFormSubmit);
 
 popupCloseButtons.forEach((closeButton) =>
-  closeButton.addEventListener("click", closePopup)
+  closeButton.addEventListener("click", () => {
+    togglePopup(closeButton.closest(".popup"));
+  })
 );
+
+render();
