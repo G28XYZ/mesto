@@ -114,7 +114,9 @@ function openAddCardPopup() {
 
 function addFormSubmit(evt) {
   evt.preventDefault();
-  addCard({ name: namePlaceAdd.value, link: linkAdd.value });
+  if (namePlaceAdd.value && linkAdd.value) {
+    addCard({ name: namePlaceAdd.value, link: linkAdd.value });
+  }
   togglePopup(popupAdd);
 }
 
