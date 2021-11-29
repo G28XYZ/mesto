@@ -28,16 +28,26 @@ const gallery = document.querySelector(".gallery");
 
 const popupCloseButtons = document.querySelectorAll(".popup__close");
 
-function render() {
-  initialCards.forEach((place) => addCard(place));
+function renderInitial() {
+  const initCards = initialCards.map((place) => addCard(place));
+  gallery.prepend(...initCards);
 }
 
-function togglePopup(selector) {
-  selector.classList.toggle("popup_opened");
+function renderCard() {
+  const card = addCard({ name: namePlaceAdd.value, link: linkAdd.value });
+  gallery.prepend(card);
+}
+
+function closePopup(selector) {
+  selector.classList.remove("popup_opened");
+}
+
+function openPopup(selector) {
+  selector.classList.add("popup_opened");
 }
 
 function openEditProfilePopup() {
-  togglePopup(popupEdit);
+  openPopup(popupEdit);
   nameEdit.value = nameProfile.textContent;
   jobEdit.value = jobProfile.textContent;
 }
@@ -46,13 +56,14 @@ function editFormSubmit(evt) {
   evt.preventDefault();
   nameProfile.textContent = nameEdit.value;
   jobProfile.textContent = jobEdit.value;
-  togglePopup(popupEdit);
+  closePopup(popupEdit);
 }
 
-function openPopupImage(namePlace, linkPlace) {
-  togglePopup(popupImage);
-  popupImageContainer.querySelector(".popup__subtitle").textContent = namePlace;
-  popupImageContainer.querySelector(".popup__image").src = linkPlace;
+function openPopupImage(place) {
+  openPopup(popupImage);
+  popupImageContainer.querySelector(".popup__subtitle").textContent =
+    place.name;
+  popupImageContainer.querySelector(".popup__image").src = place.link;
 }
 
 function addCard(place) {
@@ -74,14 +85,14 @@ function addCard(place) {
   cardImage.src = place.link;
   cardImage.alt = place.name;
   cardImage.addEventListener("click", () => {
-    openPopupImage(place.name, place.link);
+    openPopupImage(place);
   });
 
-  gallery.prepend(card);
+  return card;
 }
 
 function openAddCardPopup() {
-  togglePopup(popupAdd);
+  openPopup(popupAdd);
   namePlaceAdd.value = "";
   linkAdd.value = "";
 }
@@ -89,9 +100,9 @@ function openAddCardPopup() {
 function addFormSubmit(evt) {
   evt.preventDefault();
   if (namePlaceAdd.value && linkAdd.value) {
-    addCard({ name: namePlaceAdd.value, link: linkAdd.value });
+    renderCard();
   }
-  togglePopup(popupAdd);
+  closePopup(popupAdd);
 }
 
 profileEditButton.addEventListener("click", openEditProfilePopup);
@@ -102,8 +113,8 @@ formAdd.addEventListener("submit", addFormSubmit);
 
 popupCloseButtons.forEach((closeButton) =>
   closeButton.addEventListener("click", () => {
-    togglePopup(closeButton.closest(".popup"));
+    closePopup(closeButton.closest(".popup"));
   })
 );
 
-render();
+renderInitial();
