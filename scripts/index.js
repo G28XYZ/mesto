@@ -1,30 +1,3 @@
-const initialCards = [
-  {
-    name: "Москва",
-    link: "./images/moskva.jpg",
-  },
-  {
-    name: "Шерегеш",
-    link: "./images/sheregesh.jpg",
-  },
-  {
-    name: "Новосибирск",
-    link: "./images/novosibirsk.jpg",
-  },
-  {
-    name: "Томск",
-    link: "./images/tomsk.jpg",
-  },
-  {
-    name: "Волгоград",
-    link: "./images/volgograd.jpg",
-  },
-  {
-    name: "Алтай",
-    link: "./images/altai.jpg",
-  },
-];
-
 // селекторы попапа - редактировать профиль
 const popupEdit = document.querySelector(".popup_type_edit");
 const nameEdit = popupEdit.querySelector(".popup__input_elem_name");
@@ -40,6 +13,7 @@ const formAdd = popupAdd.querySelector(".popup__form");
 const popupImageContainer = document.querySelector(
   ".popup__container_type_image"
 );
+const popupImage = popupImageContainer.parentElement;
 
 // селекторы секции profile
 const profile = document.querySelector(".profile");
@@ -75,17 +49,15 @@ function editFormSubmit(evt) {
   togglePopup(popupEdit);
 }
 
-function openPopupImage(evt) {
-  let popupImage = popupImageContainer.parentElement;
+function openPopupImage(namePlace, linkPlace) {
   togglePopup(popupImage);
-  popupImageContainer.querySelector(".popup__image").src = evt.target.src;
-  popupImageContainer.querySelector(".popup__subtitle").textContent =
-    evt.target.alt;
+  popupImageContainer.querySelector(".popup__subtitle").textContent = namePlace;
+  popupImageContainer.querySelector(".popup__image").src = linkPlace;
 }
 
 function addCard(place) {
   const card = placeTemplate.querySelector(".place").cloneNode(true);
-  let cardImage = card.querySelector(".place__image");
+  const cardImage = card.querySelector(".place__image");
 
   card
     .querySelector(".place__like")
@@ -101,7 +73,9 @@ function addCard(place) {
 
   cardImage.src = place.link;
   cardImage.alt = place.name;
-  cardImage.addEventListener("click", openPopupImage);
+  cardImage.addEventListener("click", () => {
+    openPopupImage(place.name, place.link);
+  });
 
   gallery.prepend(card);
 }
