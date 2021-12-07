@@ -10,6 +10,7 @@
     />
     <link rel="stylesheet" href="./pages/index.css" />
     <script src="scripts/cards.js" defer></script>
+    <script src="scripts/validate.js" defer></script>
     <script src="scripts/index.js" defer></script>
     <title>Mesto</title>
   </head>
@@ -92,12 +93,9 @@
             name="job"
             class="popup__input popup__input_elem_job"
           />
-          <input
-            type="submit"
-            name="submit-edit"
-            value="Сохранить"
-            class="popup__submit"
-          />
+          <button type="submit" name="button-edit" class="popup__button">
+            Сохранить
+          </button>
         </form>
       </div>
     </div>
@@ -125,12 +123,9 @@
             required
             class="popup__input popup__input_elem_link"
           />
-          <input
-            type="submit"
-            name="submit-add"
-            value="Создать"
-            class="popup__submit"
-          />
+          <button type="submit" name="button-add" class="popup__button">
+            Создать
+          </button>
         </form>
       </div>
     </div>
