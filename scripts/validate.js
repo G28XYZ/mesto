@@ -1,9 +1,34 @@
-// включение валидации вызовом enableValidation
-// все настройки передаются при вызове
+const showInputError = (form, inputElem, errorMsg) => {
+  const errorElem = form.querySelector(`.popup__input-error-${inputElem.name}`);
+  inputElem.classList.add("popup__input_type_error");
+  errorElem.classList.add("popup__input-error_active");
+  errorElem.textContent = errorMsg;
+};
 
-const setEventListeners = (input) => {
-  checkInputValidity();
-  toggleButtonState();
+const hideInputError = (form, inputElem) => {
+  const errorElem = form.querySelector(`.popup__input-error-${inputElem.name}`);
+  if (inputElem.classList.contains("popup__input_type_error")) {
+    errorElem.classList.remove("popup__input-error_active");
+    inputElem.classList.remove("popup__input_type_error");
+    errorElem.textContent = "";
+  }
+};
+
+const checkInputValidity = (form, inputElem) => {
+  if (inputElem.validity.valid) {
+    hideInputError(form, inputElem);
+  } else {
+    showInputError(form, inputElem, inputElem.validationMessage);
+  }
+};
+
+const setEventListeners = (form, inputSelector) => {
+  const inputList = Array.from(form.querySelectorAll(inputSelector));
+  inputList.forEach((inputElem) =>
+    inputElem.addEventListener("input", () => {
+      checkInputValidity(form, inputElem);
+    })
+  );
 };
 
 const enableValidation = ({
@@ -19,11 +44,7 @@ const enableValidation = ({
     form.addEventListener("submit", (evt) => {
       evt.preventDefault();
     });
-
-    const formInputs = Array.from(
-      form.document.querySelectorAll(inputSelector)
-    );
-    formInputs.forEach((input) => setEventListeners(input));
+    setEventListeners(form, inputSelector);
   });
 };
 

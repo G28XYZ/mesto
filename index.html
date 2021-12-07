@@ -86,13 +86,21 @@
             type="text"
             name="name"
             class="popup__input popup__input_elem_name"
+            minlength="2"
+            maxlength="40"
+            required
           />
+          <span class="popup__input-error popup__input-error-name"></span>
           <input
             placeholder="Работа"
             type="text"
             name="job"
             class="popup__input popup__input_elem_job"
+            minlength="2"
+            maxlength="200"
+            required
           />
+          <span class="popup__input-error popup__input-error-job"></span>
           <button type="submit" name="button-edit" class="popup__button">
             Сохранить
           </button>
@@ -115,10 +123,12 @@
             name="name-place"
             required
             class="popup__input popup__input_elem_name-place"
+            minlength="2"
+            maxlength="30"
           />
           <input
             placeholder="Ссылка на картинку"
-            type="text"
+            type="url"
             name="link"
             required
             class="popup__input popup__input_elem_link"
