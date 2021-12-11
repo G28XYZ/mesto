@@ -1,8 +1,0 @@
-.popup__input-error {
-  font-size: 12px;
-  color: red;
-  opacity: 0;
-  transform: translate(0, -15px);
-  transition: 0.3s;
-  margin: 0;
-}
