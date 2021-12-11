@@ -126,7 +126,6 @@ function setDefaultForm(form) {
 }
 
 function keyHandler(evt) {
-  console.log(evt);
   if (evt.type === "click") {
     evt.target.classList.contains("popup") ? closePopup(keyHandler.popup) : "";
   }
