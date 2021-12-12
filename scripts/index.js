@@ -40,8 +40,12 @@ const gallery = document.querySelector(".gallery");
 
 const popupCloseButtons = document.querySelectorAll(".popup__close");
 
-function render(array) {
-  array.forEach((card) => gallery.prepend(createCard(card)));
+function addCard(container, card) {
+  container.prepend(card);
+}
+
+function render(items) {
+  items.forEach((item) => addCard(gallery, createCard(item)));
 }
 
 function closePopup(popup) {
@@ -90,9 +94,13 @@ function editFormSubmit(evt) {
 
 function addFormSubmit(evt) {
   evt.preventDefault();
-  render([{ name: namePlaceAdd.value, link: linkAdd.value }]);
+  addCard(
+    gallery,
+    createCard({ name: namePlaceAdd.value, link: linkAdd.value })
+  );
   formAdd.reset();
   setDefaultForm(formAdd, validationConfig);
+  closePopup(popupAdd);
 }
 //  }}}
 

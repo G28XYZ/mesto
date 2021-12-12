@@ -1,10 +1,10 @@
 // скрыть ошибки при открытии попапа и тогл кнопки.
 function setDefaultForm(form, config) {
-  const inputList = Array.from(form.querySelectorAll(".popup__input"));
-  const button = form.querySelector(".popup__button");
+  const inputList = Array.from(form.querySelectorAll(config.inputSelector));
+  const button = form.querySelector(config.submitButtonSelector);
   toggleButton(inputList, button, config.inactiveButtonClass);
   inputList.forEach((input) => {
-    checkInputValidity(form, input, config.inputErrorClass, config.errorClass);
+    hideInputError(form, input, config.inputErrorClass, config.errorClass);
   });
 }
 
