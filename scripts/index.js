@@ -1,11 +1,15 @@
-const validationConfig = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "popup__button_disabled",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__error_visible",
-};
+import { Card } from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
+
+const validator = new FormValidator();
+// const validationConfig = {
+//   formSelector: ".popup__form",
+//   inputSelector: ".popup__input",
+//   submitButtonSelector: ".popup__button",
+//   inactiveButtonClass: "popup__button_disabled",
+//   inputErrorClass: "popup__input_type_error",
+//   errorClass: "popup__error_visible",
+// };
 
 // селекторы попапа - редактировать профиль
 const popupEdit = document.querySelector(".popup_type_edit");
@@ -34,8 +38,6 @@ const jobProfile = profile.querySelector(".profile__job");
 const profileEditButton = profile.querySelector(".profile__edit-button");
 const cardAddButton = profile.querySelector(".profile__add-button");
 
-const placeTemplate = document.querySelector("#place-template").content;
-
 const gallery = document.querySelector(".gallery");
 
 const popupCloseButtons = document.querySelectorAll(".popup__close");
@@ -61,28 +63,8 @@ function openPopup(popup) {
 
 // {{{ функции с логикой для popup's
 function createCard(place) {
-  const card = placeTemplate.querySelector(".place").cloneNode(true);
-  const cardImage = card.querySelector(".place__image");
-
-  card
-    .querySelector(".place__like")
-    .addEventListener("click", (evt) =>
-      evt.target.classList.toggle("place__like_active")
-    );
-
-  card
-    .querySelector(".place__delete")
-    .addEventListener("click", () => card.remove());
-
-  card.querySelector(".place__title").textContent = place.name;
-
-  cardImage.src = place.link;
-  cardImage.alt = place.name;
-  cardImage.addEventListener("click", () => {
-    openPopupImage(place);
-  });
-
-  return card;
+  const card = new Card(place, "#place-template");
+  return card.generateCard();
 }
 
 function editFormSubmit(evt) {
@@ -99,7 +81,7 @@ function addFormSubmit(evt) {
     createCard({ name: namePlaceAdd.value, link: linkAdd.value })
   );
   formAdd.reset();
-  setDefaultForm(formAdd, validationConfig);
+  validator.setDefaultForm(formAdd);
   closePopup(popupAdd);
 }
 //  }}}
@@ -108,15 +90,15 @@ function openEditProfilePopup() {
   openPopup(popupEdit);
   nameEdit.value = nameProfile.textContent;
   jobEdit.value = jobProfile.textContent;
-  setDefaultForm(formEdit, validationConfig);
+  validator.setDefaultForm(formEdit);
 }
 
 function openAddCardPopup() {
   openPopup(popupAdd);
-  setDefaultForm(formAdd, validationConfig);
+  validator.setDefaultForm(formAdd);
 }
 
-function openPopupImage(place) {
+export function openPopupImage(place) {
   openPopup(popupImage);
   popupImageTitle.textContent = place.name;
   popupImageLink.src = place.link;
@@ -154,4 +136,4 @@ popupCloseButtons.forEach((closeButton) =>
 );
 
 render(initialCards);
-enableValidation(validationConfig);
+validator.enableValidation();
