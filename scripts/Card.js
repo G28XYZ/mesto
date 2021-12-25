@@ -1,5 +1,3 @@
-import { openPopupImage } from "./index.js";
-
 export class Card {
   constructor(place, template) {
     this._name = place.name;
@@ -16,7 +14,7 @@ export class Card {
   }
 
   _handleOpenPopup = () => {
-    openPopupImage({ name: this._name, link: this._link });
+    this._onOpenPopup({ name: this._name, link: this._link });
   };
 
   _handleDeleteCard = () => {
@@ -41,9 +39,9 @@ export class Card {
       .addEventListener("click", this._handleOpenPopup);
   }
 
-  generateCard() {
+  generateCard(funcOpenPopupImage) {
     this._card = this._getTemplate();
-
+    this._onOpenPopup = funcOpenPopupImage;
     this._card.querySelector(".place__title").textContent = this._name;
     this._card.querySelector(".place__image").src = this._link;
     this._card.querySelector(".place__image").alt = this._name;

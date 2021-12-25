@@ -42,10 +42,16 @@ function addCard(container, card) {
   container.prepend(card);
 }
 
+function createCard(place) {
+  const card = new Card(place, "#place-template");
+  return card.generateCard(openPopupImage);
+}
+
 function render(items) {
   items.forEach((item) => addCard(gallery, createCard(item)));
 }
 
+// {{{ функции с логикой для popup's
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
   removeHandlerListenersPopup(popup);
@@ -55,12 +61,6 @@ function openPopup(popup) {
   openPopup.popupOpened = popup;
   popup.classList.add("popup_opened");
   setHandlerListenersPopup(popup);
-}
-
-// {{{ функции с логикой для popup's
-function createCard(place) {
-  const card = new Card(place, "#place-template");
-  return card.generateCard();
 }
 
 function editFormSubmit(evt) {
@@ -80,7 +80,6 @@ function addFormSubmit(evt) {
   validator.setDefaultForm(formAdd);
   closePopup(popupAdd);
 }
-//  }}}
 
 function openEditProfilePopup() {
   openPopup(popupEdit);
@@ -101,6 +100,12 @@ export function openPopupImage(place) {
   popupImageLink.alt = place.name;
 }
 
+function setHandlerListenersPopup(popup) {
+  document.addEventListener("keydown", handleCloseEsc);
+  popup.addEventListener("click", handleCloseByOverlay);
+}
+//  }}}
+
 function handleCloseEsc(evt) {
   evt.key === "Escape" && closePopup(openPopup.popupOpened);
 }
@@ -112,11 +117,6 @@ function handleCloseByOverlay(evt) {
 function removeHandlerListenersPopup(popup) {
   document.removeEventListener("keydown", handleCloseEsc);
   popup.removeEventListener("click", handleCloseByOverlay);
-}
-
-function setHandlerListenersPopup(popup) {
-  document.addEventListener("keydown", handleCloseEsc);
-  popup.addEventListener("click", handleCloseByOverlay);
 }
 
 profileEditButton.addEventListener("click", openEditProfilePopup);
