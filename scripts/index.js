@@ -10,6 +10,33 @@ const validationConfig = {
   errorClass: "popup__error_visible",
 };
 
+const initialCards = [
+  {
+    name: "Москва",
+    link: "./images/moskva.jpg",
+  },
+  {
+    name: "Шерегеш",
+    link: "./images/sheregesh.jpg",
+  },
+  {
+    name: "Новосибирск",
+    link: "./images/novosibirsk.jpg",
+  },
+  {
+    name: "Томск",
+    link: "./images/tomsk.jpg",
+  },
+  {
+    name: "Волгоград",
+    link: "./images/volgograd.jpg",
+  },
+  {
+    name: "Алтай",
+    link: "./images/altai.jpg",
+  },
+];
+
 // селекторы попапа - редактировать профиль
 const popupEdit = document.querySelector(".popup_type_edit");
 const nameEdit = popupEdit.querySelector(".popup__input_elem_name");
