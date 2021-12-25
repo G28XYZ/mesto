@@ -17,7 +17,7 @@ export class FormValidator {
     const button = this._formSelector.querySelector(this._submitButtonSelector);
     this._toggleButton(inputList, button);
     inputList.forEach((input) => {
-      this._hideInputError(input);
+      if (input.validity.valid) this._hideInputError(input);
     });
   }
 

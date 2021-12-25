@@ -1,8 +1,10 @@
 export class Card {
-  constructor(place, template) {
+  constructor(place, template, funcOpenPopupImage) {
     this._name = place.name;
     this._link = place.link;
     this._cardTemplate = template;
+    this._image = null;
+    this._onOpenPopup = funcOpenPopupImage;
   }
 
   _getTemplate() {
@@ -34,17 +36,16 @@ export class Card {
       .querySelector(".place__delete")
       .addEventListener("click", this._handleDeleteCard);
 
-    this._card
-      .querySelector(".place__image")
-      .addEventListener("click", this._handleOpenPopup);
+    this._image.addEventListener("click", this._handleOpenPopup);
   }
 
   generateCard(funcOpenPopupImage) {
     this._card = this._getTemplate();
-    this._onOpenPopup = funcOpenPopupImage;
     this._card.querySelector(".place__title").textContent = this._name;
-    this._card.querySelector(".place__image").src = this._link;
-    this._card.querySelector(".place__image").alt = this._name;
+
+    this._image = this._card.querySelector(".place__image");
+    this._image.src = this._link;
+    this._image.alt = this._link;
 
     this._setHandlerListeners();
 
