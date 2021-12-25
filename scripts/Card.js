@@ -15,20 +15,30 @@ export class Card {
     return cardElement;
   }
 
+  _handleOpenPopup = () => {
+    openPopupImage({ name: this._name, link: this._link });
+  };
+
+  _handleDeleteCard = () => {
+    this._card.remove();
+  };
+
+  _handleToggleLike = (evt) => {
+    evt.target.classList.toggle("place__like_active");
+  };
+
   _setHandlerListeners() {
     this._card
       .querySelector(".place__like")
-      .addEventListener("click", (evt) =>
-        evt.target.classList.toggle("place__like_active")
-      );
+      .addEventListener("click", this._handleToggleLike);
 
     this._card
       .querySelector(".place__delete")
-      .addEventListener("click", () => this._card.remove());
+      .addEventListener("click", this._handleDeleteCard);
 
-    this._card.querySelector(".place__image").addEventListener("click", () => {
-      openPopupImage({ name: this._name, link: this._link });
-    });
+    this._card
+      .querySelector(".place__image")
+      .addEventListener("click", this._handleOpenPopup);
   }
 
   generateCard() {
