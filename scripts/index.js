@@ -77,7 +77,7 @@ function addFormSubmit(evt) {
     createCard({ name: namePlaceAdd.value, link: linkAdd.value })
   );
   formAdd.reset();
-  validator.setDefaultForm(formAdd);
+  popupAddValidation.setDefaultForm();
   closePopup(popupAdd);
 }
 
