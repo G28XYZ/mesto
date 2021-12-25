@@ -39,7 +39,7 @@ export class Card {
     this._image.addEventListener("click", this._handleOpenPopup);
   }
 
-  generateCard(funcOpenPopupImage) {
+  generateCard() {
     this._card = this._getTemplate();
     this._card.querySelector(".place__title").textContent = this._name;
 
