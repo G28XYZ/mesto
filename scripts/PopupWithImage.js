@@ -1,14 +1,16 @@
 import Popup from "./Popup.js";
 
 class PopupWithImage extends Popup {
-  constructor(popupSelector, onSubmit) {
-    this._popup = popupSelector;
-    this._onSubmit = onSubmit;
+  constructor(popupSelector) {
+    super(popupSelector);
   }
 
-  _getInputValues() {}
-
-  setEventListeners() {
-    return super.setEventListeners();
+  open(text, link) {
+    console.log(text, link);
+    this._popup.querySelector(".popup__subtitle").textContent = text;
+    this._popup.querySelector(".popup__image").src = link;
+    super.open();
   }
 }
+
+export default PopupWithImage;

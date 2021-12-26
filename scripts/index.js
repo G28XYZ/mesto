@@ -1,6 +1,12 @@
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
+import Popup from "./Popup.js";
+import PopupWithImage from "./PopupWithImage.js";
 import Section from "./Section.js";
+
+const popupAddClass = new Popup(".popup_type_add");
+const popupEditClass = new Popup(".popup_type_edit");
+const popupImageClass = new PopupWithImage(".popup_type_image");
 
 function addCard(container, card) {
   container.prepend(card);
@@ -83,23 +89,24 @@ function removeHandlerListenersPopup(popup) {
   popup.removeEventListener("click", handleCloseByOverlay);
 }
 
-profileEditButton.addEventListener("click", openEditProfilePopup);
-cardAddButton.addEventListener("click", openAddCardPopup);
+profileEditButton.addEventListener("click", () => {
+  popupEditClass.open();
+});
+cardAddButton.addEventListener("click", () => {
+  popupAddClass.open();
+  popupAddValidation.setDefaultForm();
+});
 
 formEdit.addEventListener("submit", editFormSubmit);
 formAdd.addEventListener("submit", addFormSubmit);
-
-popupCloseButtons.forEach((closeButton) =>
-  closeButton.addEventListener("click", () => {
-    closePopup(closeButton.closest(".popup"));
-  })
-);
 
 const defaultCards = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const card = new Card(item, "#place-template", openPopupImage);
+      const card = new Card(item, "#place-template", () =>
+        popupImageClass.open(item.name, item.link)
+      );
       const cardElement = card.generateCard();
       defaultCards.addItem(cardElement);
     },

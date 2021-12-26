@@ -1,20 +1,19 @@
 export class FormValidator {
-  constructor(config, formSelector) {
-    this._formSelector = config.formSelector;
+  constructor(config, form) {
     this._inputSelector = config.inputSelector;
     this._submitButtonSelector = config.submitButtonSelector;
     this._inactiveButtonClass = config.inactiveButtonClass;
     this._inputErrorClass = config.inputErrorClass;
     this._errorClass = config.errorClass;
-    this._formSelector = formSelector;
+    this._form = form;
   }
 
   // скрыть ошибки при открытии попапа и тогл кнопки.
   setDefaultForm() {
     const inputList = Array.from(
-      this._formSelector.querySelectorAll(this._inputSelector)
+      this._form.querySelectorAll(this._inputSelector)
     );
-    const button = this._formSelector.querySelector(this._submitButtonSelector);
+    const button = this._form.querySelector(this._submitButtonSelector);
     this._toggleButton(inputList, button);
     inputList.forEach((input) => {
       if (input.validity.valid) this._hideInputError(input);
@@ -22,7 +21,7 @@ export class FormValidator {
   }
 
   _showInputError(input, errorMessage) {
-    const errorElement = this._formSelector.querySelector(
+    const errorElement = this._form.querySelector(
       `.popup__error-${input.name}`
     );
     input.classList.add(this._inputErrorClass);
@@ -31,7 +30,7 @@ export class FormValidator {
   }
 
   _hideInputError(input) {
-    const errorElement = this._formSelector.querySelector(
+    const errorElement = this._form.querySelector(
       `.popup__error-${input.name}`
     );
     input.classList.remove(this._inputErrorClass);
@@ -63,9 +62,9 @@ export class FormValidator {
 
   _setEventListeners() {
     const inputList = Array.from(
-      this._formSelector.querySelectorAll(this._inputSelector)
+      this._form.querySelectorAll(this._inputSelector)
     );
-    const button = this._formSelector.querySelector(this._submitButtonSelector);
+    const button = this._form.querySelector(this._submitButtonSelector);
 
     inputList.forEach((input) =>
       input.addEventListener("input", () => {
@@ -76,7 +75,7 @@ export class FormValidator {
   }
 
   enableValidation() {
-    this._formSelector.addEventListener("submit", (evt) => {
+    this._form.addEventListener("submit", (evt) => {
       evt.preventDefault();
     });
     this._setEventListeners();
