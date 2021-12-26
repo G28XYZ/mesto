@@ -1,5 +1,6 @@
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
+import Section from "./Section.js";
 
 function addCard(container, card) {
   container.prepend(card);
@@ -94,9 +95,21 @@ popupCloseButtons.forEach((closeButton) =>
   })
 );
 
+const defaultCards = new Section(
+  {
+    items: initialCards,
+    renderer: (item) => {
+      const card = new Card(item, "#place-template", openPopupImage);
+      const cardElement = card.generateCard();
+      defaultCards.addItem(cardElement);
+    },
+  },
+  gallery
+);
+
+defaultCards.renderItems();
+
 const popupAddValidation = new FormValidator(validationConfig, popupAdd);
 const popupEditValidation = new FormValidator(validationConfig, popupEdit);
 popupAddValidation.enableValidation();
 popupEditValidation.enableValidation();
-
-render(initialCards);
