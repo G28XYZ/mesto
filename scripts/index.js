@@ -56,7 +56,7 @@ function openAddCardPopup() {
   popupAddValidation.setDefaultForm();
 }
 
-export function openPopupImage(place) {
+function openPopupImage(place) {
   openPopup(popupImage);
   popupImageTitle.textContent = place.name;
   popupImageLink.src = place.link;
