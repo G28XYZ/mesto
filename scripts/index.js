@@ -30,7 +30,6 @@ function editFormSubmit(evt, items) {
 
 function addFormSubmit(evt, items) {
   evt.preventDefault();
-  console.log(evt, items);
   addCard([{ name: items[0], link: items[1] }]);
   popupAddClass.close();
   popupAddValidation.setDefaultForm();
