@@ -23,10 +23,10 @@ class PopupWithForm extends Popup {
     this._popupForm.addEventListener("submit", this._onSubmitHandler);
   }
 
-  open(inputsValue = []) {
+  open(inputValues = []) {
     super.open();
     this._inputList.forEach((input, index) => {
-      input.value = inputsValue[index] || "";
+      input.value = inputValues[index] || "";
     });
   }
 

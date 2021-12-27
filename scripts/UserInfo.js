@@ -1,5 +1,5 @@
 class UserInfo {
-  constructor(nameProfileSelector, infoProfileSelector) {
+  constructor({ nameProfileSelector, infoProfileSelector }) {
     this._userName = document.querySelector(nameProfileSelector);
     this._userInfo = document.querySelector(infoProfileSelector);
   }
@@ -8,8 +8,8 @@ class UserInfo {
     return [this._userName.textContent, this._userInfo.textContent];
   }
 
-  setUserInfo(inputsValue) {
-    [this._userName.textContent, this._userInfo.textContent] = inputsValue;
+  setUserInfo(inputValues) {
+    [this._userName.textContent, this._userInfo.textContent] = inputValues;
   }
 }
 

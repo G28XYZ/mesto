@@ -1,10 +1,10 @@
 export class Card {
-  constructor(place, template, funcOpenPopupImage) {
+  constructor(place, template, handleCardClick) {
     this._name = place.name;
     this._link = place.link;
     this._cardTemplate = template;
     this._image = null;
-    this._onOpenPopup = funcOpenPopupImage;
+    this._onOpenPopup = handleCardClick;
   }
 
   _getTemplate() {

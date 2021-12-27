@@ -5,7 +5,20 @@ import PopupWithForm from "./PopupWithForm.js";
 import Section from "./Section.js";
 import UserInfo from "./UserInfo.js";
 
-function addCard(items) {
+const popupAddClass = new PopupWithForm(".popup_type_add", addFormSubmit);
+const popupEditClass = new PopupWithForm(".popup_type_edit", editFormSubmit);
+const popupImageClass = new PopupWithImage(".popup_type_image");
+const userInfo = new UserInfo({
+  nameProfileSelector: ".profile__name",
+  infoProfileSelector: ".profile__job",
+});
+
+const popupAddValidation = new FormValidator(validationConfig, popupAdd);
+const popupEditValidation = new FormValidator(validationConfig, popupEdit);
+popupAddValidation.enableValidation();
+popupEditValidation.enableValidation();
+
+const addCard = (items) => {
   const newCard = new Section(
     {
       items,
@@ -20,7 +33,7 @@ function addCard(items) {
     gallery
   );
   newCard.renderItems();
-}
+};
 
 function editFormSubmit(evt, items) {
   evt.preventDefault();
@@ -35,11 +48,6 @@ function addFormSubmit(evt, items) {
   popupAddValidation.setDefaultForm();
 }
 
-const popupAddClass = new PopupWithForm(".popup_type_add", addFormSubmit);
-const popupEditClass = new PopupWithForm(".popup_type_edit", editFormSubmit);
-const popupImageClass = new PopupWithImage(".popup_type_image");
-const userInfo = new UserInfo(".profile__name", ".profile__job");
-
 profileEditButton.addEventListener("click", () => {
   popupEditClass.open(userInfo.getUserInfo());
   popupEditValidation.setDefaultForm();
@@ -48,10 +56,5 @@ cardAddButton.addEventListener("click", () => {
   popupAddClass.open();
   popupAddValidation.setDefaultForm();
 });
-
-const popupAddValidation = new FormValidator(validationConfig, popupAdd);
-const popupEditValidation = new FormValidator(validationConfig, popupEdit);
-popupAddValidation.enableValidation();
-popupEditValidation.enableValidation();
 
 addCard(initialCards);
