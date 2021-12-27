@@ -1,3 +1,13 @@
+import "../pages/index.css";
+import {
+  validationConfig,
+  initialCards,
+  popupEdit,
+  popupAdd,
+  profileEditButton,
+  cardAddButton,
+  gallery,
+} from "./constants.js";
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
 import PopupWithImage from "./PopupWithImage.js";
