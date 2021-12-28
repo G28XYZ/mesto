@@ -15,8 +15,8 @@ import PopupWithForm from "./PopupWithForm.js";
 import Section from "./Section.js";
 import UserInfo from "./UserInfo.js";
 
-const popupAddClass = new PopupWithForm(".popup_type_add", addFormSubmit);
 const popupEditClass = new PopupWithForm(".popup_type_edit", editFormSubmit);
+const popupAddClass = new PopupWithForm(".popup_type_add", addFormSubmit);
 const popupImageClass = new PopupWithImage(".popup_type_image");
 const userInfo = new UserInfo({
   nameProfileSelector: ".profile__name",
@@ -45,6 +45,8 @@ const addCard = (items) => {
   newCard.renderItems();
 };
 
+addCard(initialCards);
+
 function editFormSubmit(evt, items) {
   evt.preventDefault();
   userInfo.setUserInfo(items);
@@ -66,5 +68,3 @@ cardAddButton.addEventListener("click", () => {
   popupAddClass.open();
   popupAddValidation.setDefaultForm();
 });
-
-addCard(initialCards);
