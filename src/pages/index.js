@@ -1,4 +1,4 @@
-import "../pages/index.css";
+import "./index.css";
 import {
   validationConfig,
   initialCards,
@@ -7,13 +7,13 @@ import {
   profileEditButton,
   cardAddButton,
   gallery,
-} from "./constants.js";
-import { Card } from "./Card.js";
-import { FormValidator } from "./FormValidator.js";
-import PopupWithImage from "./PopupWithImage.js";
-import PopupWithForm from "./PopupWithForm.js";
-import Section from "./Section.js";
-import UserInfo from "./UserInfo.js";
+} from "../utils/constants.js";
+import { Card } from "../components/Card.js";
+import { FormValidator } from "../components/FormValidator.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import Section from "../components/Section.js";
+import UserInfo from "../components/UserInfo.js";
 
 const popupEditClass = new PopupWithForm(".popup_type_edit", editFormSubmit);
 const popupAddClass = new PopupWithForm(".popup_type_add", addFormSubmit);
@@ -29,7 +29,7 @@ popupAddValidation.enableValidation();
 popupEditValidation.enableValidation();
 
 const addCard = (items) => {
-  const newCard = new Section(
+  const сardSection = new Section(
     {
       items,
       renderer: (item) => {
@@ -37,12 +37,12 @@ const addCard = (items) => {
           popupImageClass.open(item)
         );
         const cardElement = card.generateCard();
-        newCard.addItem(cardElement);
+        сardSection.addItem(cardElement);
       },
     },
     gallery
   );
-  newCard.renderItems();
+  сardSection.renderItems();
 };
 
 addCard(initialCards);

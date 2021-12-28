@@ -2,9 +2,6 @@ class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
     this._popupCloseBtn = this._popup.querySelector(".popup__close");
-    this._boundHandlerEscClose = this._handleEscClose.bind(this);
-    this._boundHandlerCloseByOverlay = this._handleCloseByOverlay.bind(this);
-    this._boundHandlerClose = this.close.bind(this);
   }
 
   _handleEscClose = (evt) => {
