@@ -11,11 +11,14 @@ class PopupWithForm extends Popup {
   }
 
   _getInputValues() {
-    return this._inputList.map((input) => input.value);
+    return this._inputList.reduce((obj, input) => {
+      obj[input.name] = input.value;
+      return obj;
+    }, {});
   }
 
   _onSubmitHandler = (evt) => {
-    this._onSubmit(evt, this._getInputValues(evt));
+    this._onSubmit(evt, this._getInputValues());
   };
 
   setEventListeners() {
@@ -23,10 +26,10 @@ class PopupWithForm extends Popup {
     this._popupForm.addEventListener("submit", this._onSubmitHandler);
   }
 
-  open(inputValues = []) {
+  open(inputValues = {}) {
     super.open();
-    this._inputList.forEach((input, index) => {
-      input.value = inputValues[index] || "";
+    this._inputList.forEach((input) => {
+      input.value = inputValues[input.name] || "";
     });
   }
 

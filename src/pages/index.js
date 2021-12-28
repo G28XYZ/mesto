@@ -18,6 +18,10 @@ import UserInfo from "../components/UserInfo.js";
 const popupEditClass = new PopupWithForm(".popup_type_edit", editFormSubmit);
 const popupAddClass = new PopupWithForm(".popup_type_add", addFormSubmit);
 const popupImageClass = new PopupWithImage(".popup_type_image");
+popupEditClass.setEventListeners();
+popupAddClass.setEventListeners();
+popupImageClass.setEventListeners();
+
 const userInfo = new UserInfo({
   nameProfileSelector: ".profile__name",
   infoProfileSelector: ".profile__job",
@@ -28,34 +32,35 @@ const popupEditValidation = new FormValidator(validationConfig, popupEdit);
 popupAddValidation.enableValidation();
 popupEditValidation.enableValidation();
 
-const addCard = (items) => {
-  const сardSection = new Section(
-    {
-      items,
-      renderer: (item) => {
-        const card = new Card(item, "#place-template", () =>
-          popupImageClass.open(item)
-        );
-        const cardElement = card.generateCard();
-        сardSection.addItem(cardElement);
-      },
+const сardSection = new Section(
+  {
+    items: initialCards,
+    renderer: (place) => {
+      const card = getCardElement(place);
+      сardSection.addItem(card);
     },
-    gallery
+  },
+  gallery
+);
+сardSection.renderItems();
+
+function getCardElement(place) {
+  const cardElement = new Card(place, "#place-template", () =>
+    popupImageClass.open(place)
   );
-  сardSection.renderItems();
-};
+  return cardElement.generateCard();
+}
 
-addCard(initialCards);
-
-function editFormSubmit(evt, items) {
+function editFormSubmit(evt, inputItems) {
   evt.preventDefault();
-  userInfo.setUserInfo(items);
+  userInfo.setUserInfo(inputItems);
   popupEditClass.close();
 }
 
-function addFormSubmit(evt, items) {
+function addFormSubmit(evt, inputItems) {
   evt.preventDefault();
-  addCard([{ name: items[0], link: items[1] }]);
+  const card = getCardElement(inputItems);
+  сardSection.addItem(card);
   popupAddClass.close();
   popupAddValidation.setDefaultForm();
 }
@@ -64,6 +69,7 @@ profileEditButton.addEventListener("click", () => {
   popupEditClass.open(userInfo.getUserInfo());
   popupEditValidation.setDefaultForm();
 });
+
 cardAddButton.addEventListener("click", () => {
   popupAddClass.open();
   popupAddValidation.setDefaultForm();

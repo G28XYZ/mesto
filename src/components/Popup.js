@@ -13,14 +13,13 @@ class Popup {
   };
 
   setEventListeners() {
-    document.addEventListener("keydown", this._handleEscClose);
     this._popup.addEventListener("click", this._handleCloseByOverlay);
     this._popupCloseBtn.addEventListener("click", this.close);
   }
 
   open() {
     this._popup.classList.add("popup_opened");
-    this.setEventListeners();
+    document.addEventListener("keydown", this._handleEscClose);
   }
 
   close = () => {

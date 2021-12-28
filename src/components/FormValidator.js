@@ -6,16 +6,15 @@ export class FormValidator {
     this._inputErrorClass = config.inputErrorClass;
     this._errorClass = config.errorClass;
     this._form = form;
-  }
-
-  // скрыть ошибки при открытии попапа и тогл кнопки.
-  setDefaultForm() {
-    const inputList = Array.from(
+    this._inputList = Array.from(
       this._form.querySelectorAll(this._inputSelector)
     );
-    const button = this._form.querySelector(this._submitButtonSelector);
-    this._toggleButton(inputList, button);
-    inputList.forEach((input) => {
+    this._submitButton = this._form.querySelector(this._submitButtonSelector);
+  }
+
+  setDefaultForm() {
+    this._toggleButton();
+    this._inputList.forEach((input) => {
       this._hideInputError(input);
     });
   }
@@ -46,29 +45,24 @@ export class FormValidator {
     }
   };
 
-  _hasInvalidInputs(inputList) {
-    return inputList.some((input) => !input.validity.valid);
+  _hasInvalidInputs() {
+    return this._inputList.some((input) => !input.validity.valid);
   }
 
-  _toggleButton = (inputList, button) => {
-    if (this._hasInvalidInputs(inputList)) {
-      button.classList.add(this._inactiveButtonClass);
-      button.disabled = true;
+  _toggleButton = () => {
+    if (this._hasInvalidInputs()) {
+      this._submitButton.classList.add(this._inactiveButtonClass);
+      this._submitButton.disabled = true;
     } else {
-      button.classList.remove(this._inactiveButtonClass);
-      button.disabled = false;
+      this._submitButton.classList.remove(this._inactiveButtonClass);
+      this._submitButton.disabled = false;
     }
   };
 
   _setEventListeners() {
-    const inputList = Array.from(
-      this._form.querySelectorAll(this._inputSelector)
-    );
-    const button = this._form.querySelector(this._submitButtonSelector);
-
-    inputList.forEach((input) =>
+    this._inputList.forEach((input) =>
       input.addEventListener("input", () => {
-        this._toggleButton(inputList, button);
+        this._toggleButton();
         this._checkInputValidity(input);
       })
     );
