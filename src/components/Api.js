@@ -2,6 +2,10 @@ export default class Api {
   constructor({ address, token }) {
     this._address = address;
     this._token = token;
+    this._headers = {
+      authorization: this._token,
+      "Content-Type": "application/json",
+    };
   }
 
   _handleResponse = (response) => {
@@ -12,13 +16,13 @@ export default class Api {
 
   getCards() {
     return fetch(`${this._address}/cards`, {
-      headers: { authorization: this._token },
+      headers: this._headers,
     }).then(this._handleResponse);
   }
 
   getUserInfo() {
-    return fetch("https://nomoreparties.co/v1/cohort-35/users/me", {
-      headers: { authorization: this._token },
+    return fetch(`${this._address}/users/me`, {
+      headers: this._headers,
     }).then(this._handleResponse);
   }
 }

@@ -5,7 +5,7 @@ import {
   popupAdd,
   profileEditButton,
   cardAddButton,
-  gallery,
+  avatar,
 } from "../utils/constants.js";
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
@@ -39,13 +39,13 @@ popupEditValidation.enableValidation();
 
 const сardsSection = new Section(
   {
-    items: "",
+    items: [],
     renderer: (place) => {
       const card = getCardElement(place);
       сardsSection.addItem(card);
     },
   },
-  gallery
+  ".gallery"
 );
 
 function getCardElement(place) {
@@ -77,6 +77,11 @@ profileEditButton.addEventListener("click", () => {
 cardAddButton.addEventListener("click", () => {
   popupAddClass.open();
   popupAddValidation.setDefaultForm();
+});
+
+api.getUserInfo().then((data) => {
+  userInfo.setUserInfo(data);
+  avatar.src = data.avatar;
 });
 
 api

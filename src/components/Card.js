@@ -1,7 +1,7 @@
 export class Card {
-  constructor(place, template, handleCardClick) {
-    this._name = place.name;
-    this._link = place.link;
+  constructor({ name, link }, template, handleCardClick) {
+    this._name = name;
+    this._link = link;
     this._cardTemplate = template;
     this._image = null;
     this._onOpenPopup = handleCardClick;
