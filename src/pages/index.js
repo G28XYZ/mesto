@@ -1,7 +1,6 @@
 import "./index.css";
 import {
   validationConfig,
-  initialCards,
   popupEdit,
   popupAdd,
   profileEditButton,
@@ -14,6 +13,12 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
+import Api from "../components/Api";
+
+const api = new Api({
+  address: "https://mesto.nomoreparties.co/v1/cohort-35",
+  token: "0a82637d-8f3a-4a9c-b501-7fa9f5bac73e",
+});
 
 const popupEditClass = new PopupWithForm(".popup_type_edit", editFormSubmit);
 const popupAddClass = new PopupWithForm(".popup_type_add", addFormSubmit);
@@ -32,17 +37,16 @@ const popupEditValidation = new FormValidator(validationConfig, popupEdit);
 popupAddValidation.enableValidation();
 popupEditValidation.enableValidation();
 
-const сardSection = new Section(
+const сardsSection = new Section(
   {
-    items: initialCards,
+    items: "",
     renderer: (place) => {
       const card = getCardElement(place);
-      сardSection.addItem(card);
+      сardsSection.addItem(card);
     },
   },
   gallery
 );
-сardSection.renderItems();
 
 function getCardElement(place) {
   const cardElement = new Card(place, "#place-template", () =>
@@ -60,7 +64,7 @@ function editFormSubmit(evt, inputItems) {
 function addFormSubmit(evt, inputItems) {
   evt.preventDefault();
   const card = getCardElement(inputItems);
-  сardSection.addItem(card);
+  сardsSection.addItem(card);
   popupAddClass.close();
   popupAddValidation.setDefaultForm();
 }
@@ -74,3 +78,13 @@ cardAddButton.addEventListener("click", () => {
   popupAddClass.open();
   popupAddValidation.setDefaultForm();
 });
+
+api
+  .getCards()
+  .then((cards) => {
+    cards.forEach((card) => {
+      const cardElement = getCardElement(card);
+      сardsSection.addItem(cardElement);
+    });
+  })
+  .catch((err) => console.log(err));

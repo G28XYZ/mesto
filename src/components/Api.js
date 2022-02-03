@@ -1,27 +1,24 @@
 export default class Api {
-  constructor() {}
+  constructor({ address, token }) {
+    this._address = address;
+    this._token = token;
+  }
+
+  _handleResponse = (response) => {
+    return response.ok
+      ? response.json()
+      : Promise.reject(`Ошибка ${response.status}`);
+  };
 
   getCards() {
-    return fetch("https://mesto.nomoreparties.co/v1/cohort-35/cards", {
-      headers: {
-        authorization: "0a82637d-8f3a-4a9c-b501-7fa9f5bac73e",
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-      });
+    return fetch(`${this._address}/cards`, {
+      headers: { authorization: this._token },
+    }).then(this._handleResponse);
   }
 
   getUserInfo() {
     return fetch("https://nomoreparties.co/v1/cohort-35/users/me", {
-      headers: {
-        authorization: "0a82637d-8f3a-4a9c-b501-7fa9f5bac73e",
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log(result);
-      });
+      headers: { authorization: this._token },
+    }).then(this._handleResponse);
   }
 }
