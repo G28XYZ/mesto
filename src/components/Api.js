@@ -25,4 +25,15 @@ export default class Api {
       headers: this._headers,
     }).then(this._handleResponse);
   }
+
+  patchProfile({ name, about }) {
+    fetch(`${this._address}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name,
+        about,
+      }),
+    });
+  }
 }

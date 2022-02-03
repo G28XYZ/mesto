@@ -58,6 +58,7 @@ function getCardElement(place) {
 function editFormSubmit(evt, inputItems) {
   evt.preventDefault();
   userInfo.setUserInfo(inputItems);
+  api.patchProfile(inputItems);
   popupEditClass.close();
 }
 
