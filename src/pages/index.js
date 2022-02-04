@@ -11,6 +11,7 @@ import {
   avatarContainer,
   token,
   address,
+  initialCards,
 } from "../utils/constants.js";
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
@@ -50,7 +51,7 @@ popupAvatarValidation.enableValidation();
 
 const cardsSection = new Section(
   {
-    items: [],
+    items: initialCards,
     renderer: (place) => {
       const card = getCardElement(place);
       cardsSection.addItem(card);
@@ -58,6 +59,16 @@ const cardsSection = new Section(
   },
   ".gallery"
 );
+
+api
+  .getCards()
+  .then((cards) => {
+    initialCards.push(...cards);
+  })
+  .catch((err) => console.log(err))
+  .finally(() => {
+    cardsSection.renderItems();
+  });
 
 function getCardElement(place) {
   const cardElement = new Card(place, "#place-template", () =>
@@ -113,15 +124,5 @@ api
   .then((data) => {
     userInfo.setUserInfo(data);
     avatar.src = data.avatar;
-  })
-  .catch((err) => console.log(err));
-
-api
-  .getCards()
-  .then((cards) => {
-    cards.forEach((card) => {
-      const cardElement = getCardElement(card);
-      cardsSection.addItem(cardElement);
-    });
   })
   .catch((err) => console.log(err));
