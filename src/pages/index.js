@@ -9,6 +9,7 @@ import {
   avatarContainer,
   token,
   address,
+  popupAvatar,
 } from "../utils/constants.js";
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
@@ -39,8 +40,10 @@ const userInfo = new UserInfo({
 
 const popupAddValidation = new FormValidator(validationConfig, popupAdd);
 const popupEditValidation = new FormValidator(validationConfig, popupEdit);
+const popupAvatarValidation = new FormValidator(validationConfig, popupAvatar);
 popupAddValidation.enableValidation();
 popupEditValidation.enableValidation();
+popupAvatarValidation.enableValidation();
 
 const cardsSection = new Section(
   {
@@ -97,7 +100,10 @@ cardAddButton.addEventListener("click", () => {
   popupAddValidation.setDefaultForm();
 });
 
-avatarContainer.addEventListener("click", editAvatar);
+avatarContainer.addEventListener("click", () => {
+  popupAvatarClass.open();
+  popupAvatarValidation.setDefaultForm();
+});
 
 api
   .getUserInfo()
