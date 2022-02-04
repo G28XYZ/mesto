@@ -65,7 +65,14 @@
         ></button>
         <div class="place__row">
           <h2 class="place__title"></h2>
-          <button aria-label="Лайк" type="button" class="place__like"></button>
+          <div>
+            <button
+              aria-label="Лайк"
+              type="button"
+              class="place__like"
+            ></button>
+            <p class="place__like-count"></p>
+          </div>
         </div>
       </article>
     </template>
@@ -172,6 +179,20 @@
           <button type="submit" name="button-add" class="popup__button">
             Сохранить
           </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="popup popup_type_delete">
+      <div class="popup__container">
+        <button
+          aria-label="Закрыть"
+          type="button"
+          class="popup__close"
+        ></button>
+        <h3 class="popup__title">Вы уверены?</h3>
+        <form name="form" class="popup__form">
+          <button type="submit" class="popup__button">Да</button>
         </form>
       </div>
     </div>

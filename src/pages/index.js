@@ -3,13 +3,14 @@ import {
   validationConfig,
   popupEdit,
   popupAdd,
+  popupAvatar,
+  popupDelete,
   profileEditButton,
   cardAddButton,
   avatar,
   avatarContainer,
   token,
   address,
-  popupAvatar,
 } from "../utils/constants.js";
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
@@ -27,11 +28,13 @@ const api = new Api({
 const popupEditClass = new PopupWithForm(".popup_type_edit", editFormSubmit);
 const popupAddClass = new PopupWithForm(".popup_type_add", addFormSubmit);
 const popupAvatarClass = new PopupWithForm(".popup_type_avatar");
+const popupDeleteClass = new PopupWithForm(".popup_type_delete");
 const popupImageClass = new PopupWithImage(".popup_type_image");
 popupEditClass.setEventListeners();
 popupAddClass.setEventListeners();
 popupImageClass.setEventListeners();
 popupAvatarClass.setEventListeners();
+popupDeleteClass.setEventListeners();
 
 const userInfo = new UserInfo({
   nameProfileSelector: ".profile__name",

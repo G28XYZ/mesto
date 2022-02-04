@@ -49,6 +49,7 @@
 @import url(../blocks/place/__row/place__row.css);
 @import url(../blocks/place/__title/place__title.css);
 @import url(../blocks/place/__like/place__like.css);
+@import url(../blocks/place/__like-count/place__like-count.css);
 @import url(../blocks/place/__delete/place__delete.css);
 @import url(../blocks/place/__like/_active/place__like_active.css);
 /* </place> */
