@@ -6,6 +6,7 @@ import {
   profileEditButton,
   cardAddButton,
   avatar,
+  avatarContainer,
   token,
   address,
 } from "../utils/constants.js";
@@ -24,10 +25,12 @@ const api = new Api({
 
 const popupEditClass = new PopupWithForm(".popup_type_edit", editFormSubmit);
 const popupAddClass = new PopupWithForm(".popup_type_add", addFormSubmit);
+const popupAvatarClass = new PopupWithForm(".popup_type_avatar");
 const popupImageClass = new PopupWithImage(".popup_type_image");
 popupEditClass.setEventListeners();
 popupAddClass.setEventListeners();
 popupImageClass.setEventListeners();
+popupAvatarClass.setEventListeners();
 
 const userInfo = new UserInfo({
   nameProfileSelector: ".profile__name",
@@ -82,6 +85,8 @@ function addFormSubmit(evt, inputItems) {
   popupAddValidation.setDefaultForm();
 }
 
+function editAvatar() {}
+
 profileEditButton.addEventListener("click", () => {
   popupEditClass.open(userInfo.getUserInfo());
   popupEditValidation.setDefaultForm();
@@ -91,6 +96,8 @@ cardAddButton.addEventListener("click", () => {
   popupAddClass.open();
   popupAddValidation.setDefaultForm();
 });
+
+avatarContainer.addEventListener("click", editAvatar);
 
 api
   .getUserInfo()
