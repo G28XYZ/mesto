@@ -61,8 +61,18 @@ const cardsSection = new Section(
 );
 
 api
+  .getUserInfo()
+  .then((data) => {
+    console.log(data);
+    userInfo.setUserInfo(data);
+    avatar.src = data.avatar;
+  })
+  .catch((err) => console.log(err));
+
+api
   .getCards()
   .then((cards) => {
+    console.log(cards);
     initialCards.push(...cards);
   })
   .catch((err) => console.log(err))
@@ -71,8 +81,11 @@ api
   });
 
 function getCardElement(place) {
-  const cardElement = new Card(place, "#place-template", () =>
-    popupImageClass.open(place)
+  const cardElement = new Card(
+    place,
+    "#place-template",
+    () => popupImageClass.open(place),
+    userInfo.getUserInfo().userId
   );
   return cardElement.generateCard();
 }
@@ -118,11 +131,3 @@ avatarContainer.addEventListener("click", () => {
   popupAvatarClass.open();
   popupAvatarValidation.setDefaultForm();
 });
-
-api
-  .getUserInfo()
-  .then((data) => {
-    userInfo.setUserInfo(data);
-    avatar.src = data.avatar;
-  })
-  .catch((err) => console.log(err));

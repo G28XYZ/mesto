@@ -1,11 +1,17 @@
 export class Card {
-  constructor({ name, link, likes = [] }, template, handleCardClick) {
+  constructor(
+    { name, link, likes = [], owner },
+    template,
+    handleCardClick,
+    userId
+  ) {
     this._name = name;
     this._link = link;
     this._cardTemplate = template;
     this._image = null;
     this._onOpenPopup = handleCardClick;
     this._likesLength = likes.length;
+    this._isUserCard = owner._id === userId;
   }
 
   _getTemplate() {
@@ -45,7 +51,13 @@ export class Card {
     this._card.querySelector(".place__title").textContent = this._name;
     this._card.querySelector(".place__like-count").textContent =
       this._likesLength;
+    if (!this._isUserCard) {
+      this._card
+        .querySelector(".place__delete")
+        .classList.add("place__delete_hidden");
+    }
     this._image = this._card.querySelector(".place__image");
+
     this._image.src = this._link;
     this._image.alt = this._link;
 
