@@ -3,4 +3,5 @@
   height: 120px;
   border-radius: 50%;
   grid-row: span 2;
+  object-fit: cover;
 }

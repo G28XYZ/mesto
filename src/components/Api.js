@@ -27,13 +27,31 @@ export default class Api {
   }
 
   patchProfile({ name, about }) {
-    fetch(`${this._address}/users/me`, {
+    return fetch(`${this._address}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
         name,
         about,
       }),
-    });
+    }).then(this._handleResponse);
   }
+
+  postCard({ name, link }) {
+    return fetch(`${this._address}/cards`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify({
+        name,
+        link,
+      }),
+    }).then(this._handleResponse);
+  }
+
+  // deleteCard(id) {
+  //   return fetch(`${this._address}/cards/${id}`, {
+  //     method: "DELETE",
+  //     headers: this._headers,
+  //   }).then(this._handleResponse);
+  // }
 }

@@ -6,6 +6,8 @@ import {
   profileEditButton,
   cardAddButton,
   avatar,
+  token,
+  address,
 } from "../utils/constants.js";
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
@@ -16,8 +18,8 @@ import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api";
 
 const api = new Api({
-  address: "https://mesto.nomoreparties.co/v1/cohort-35",
-  token: "0a82637d-8f3a-4a9c-b501-7fa9f5bac73e",
+  address,
+  token,
 });
 
 const popupEditClass = new PopupWithForm(".popup_type_edit", editFormSubmit);
@@ -37,12 +39,12 @@ const popupEditValidation = new FormValidator(validationConfig, popupEdit);
 popupAddValidation.enableValidation();
 popupEditValidation.enableValidation();
 
-const сardsSection = new Section(
+const cardsSection = new Section(
   {
     items: [],
     renderer: (place) => {
       const card = getCardElement(place);
-      сardsSection.addItem(card);
+      cardsSection.addItem(card);
     },
   },
   ".gallery"
@@ -57,15 +59,25 @@ function getCardElement(place) {
 
 function editFormSubmit(evt, inputItems) {
   evt.preventDefault();
-  userInfo.setUserInfo(inputItems);
-  api.patchProfile(inputItems);
+  api
+    .patchProfile(inputItems)
+    .then((data) => {
+      userInfo.setUserInfo(data);
+      avatar.src = data.avatar;
+    })
+    .catch((err) => console.log(`Error edit profile: ${err}`));
   popupEditClass.close();
 }
 
 function addFormSubmit(evt, inputItems) {
   evt.preventDefault();
-  const card = getCardElement(inputItems);
-  сardsSection.addItem(card);
+  api
+    .postCard(inputItems)
+    .then((data) => {
+      const card = getCardElement(data);
+      cardsSection.addItem(card);
+    })
+    .catch((err) => console.log(`Error add card: ${err}`));
   popupAddClass.close();
   popupAddValidation.setDefaultForm();
 }
@@ -80,17 +92,20 @@ cardAddButton.addEventListener("click", () => {
   popupAddValidation.setDefaultForm();
 });
 
-api.getUserInfo().then((data) => {
-  userInfo.setUserInfo(data);
-  avatar.src = data.avatar;
-});
+api
+  .getUserInfo()
+  .then((data) => {
+    userInfo.setUserInfo(data);
+    avatar.src = data.avatar;
+  })
+  .catch((err) => console.log(err));
 
 api
   .getCards()
   .then((cards) => {
     cards.forEach((card) => {
       const cardElement = getCardElement(card);
-      сardsSection.addItem(cardElement);
+      cardsSection.addItem(cardElement);
     });
   })
   .catch((err) => console.log(err));
