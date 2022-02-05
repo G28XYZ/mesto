@@ -98,7 +98,7 @@ export class Card {
     this._image = this._card.querySelector(".place__image");
 
     this._image.src = this._link;
-    this._image.alt = this._link;
+    this._image.alt = this._name;
 
     this._setHandlerListeners();
 

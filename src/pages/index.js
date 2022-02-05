@@ -4,7 +4,6 @@ import {
   popupEdit,
   popupAdd,
   popupAvatar,
-  popupDelete,
   profileEditButton,
   cardAddButton,
   avatar,
@@ -44,6 +43,7 @@ popupDeleteClass.setEventListeners();
 const userInfo = new UserInfo({
   nameProfileSelector: ".profile__name",
   infoProfileSelector: ".profile__job",
+  avatarProfileSelector: ".profile__avatar",
 });
 
 const popupAddValidation = new FormValidator(validationConfig, popupAdd);
@@ -67,16 +67,13 @@ const cardsSection = new Section(
 api
   .getUserInfo()
   .then((data) => {
-    console.log(data);
     userInfo.setUserInfo(data);
-    avatar.src = data.avatar;
   })
   .catch((err) => console.log(err));
 
 api
   .getCards()
   .then((cards) => {
-    console.log(cards);
     initialCards.push(...cards);
   })
   .catch((err) => console.log(err))
@@ -85,51 +82,67 @@ api
   });
 
 function getCardElement(place) {
-  const userId = userInfo.getUserInfo().userId;
   const cardElement = new Card(
     place,
     "#place-template",
     () => popupImageClass.open(place),
-    userId,
+    userInfo.getUserInfo().userId,
     (cardId, card) => popupDeleteClass.open(cardId, card),
     api
   );
   return cardElement.generateCard();
 }
 
+function changeTypeButton(button, text = "Сохранение...") {
+  button.disabled = !button.disabled;
+  button.textContent = text;
+}
+
 function editFormSubmit(evt, inputItems) {
   evt.preventDefault();
+  changeTypeButton(evt.target.querySelector(".popup__button"));
   api
     .patchProfile(inputItems)
     .then((data) => {
       userInfo.setUserInfo(data);
       avatar.src = data.avatar;
     })
-    .catch((err) => console.log(`Error edit profile: ${err}`));
-  popupEditClass.close();
+    .catch((err) => console.log(`Ошибка редактирование профиля: ${err}`))
+    .finally(() => {
+      popupEditClass.close();
+      changeTypeButton(evt.target.querySelector(".popup__button"), "Сохранить");
+    });
 }
 
 function addFormSubmit(evt, inputItems) {
   evt.preventDefault();
+  changeTypeButton(evt.target.querySelector(".popup__button"));
   api
     .postCard(inputItems)
     .then((data) => {
       const card = getCardElement(data);
       cardsSection.addItem(card);
     })
-    .catch((err) => console.log(`Error add card: ${err}`));
-  popupAddClass.close();
-  popupAddValidation.setDefaultForm();
+    .catch((err) => console.log(`Ошибка добавление карточки: ${err}`))
+    .finally(() => {
+      popupAddClass.close();
+      popupAddValidation.setDefaultForm();
+      changeTypeButton(evt.target.querySelector(".popup__button"), "Создать");
+    });
 }
 
 function deleteCard(evt, cardId, card) {
   evt.preventDefault();
+  changeTypeButton(evt.target.querySelector(".popup__button"));
   api
     .deleteCard(cardId)
     .then((data) => console.log(data))
-    .catch((err) => console.log(err));
-  card.remove();
-  popupDeleteClass.close();
+    .catch((err) => console.log(err))
+    .finally(() => {
+      card.remove();
+      popupDeleteClass.close();
+      changeTypeButton(evt.target.querySelector(".popup__button"), "Да");
+    });
 }
 
 function editAvatar(evt) {

@@ -15,7 +15,6 @@ const address = "https://mesto.nomoreparties.co/v1/cohort-35";
 const popupEdit = document.querySelector(".popup_type_edit");
 const popupAdd = document.querySelector(".popup_type_add");
 const popupAvatar = document.querySelector(".popup_type_avatar");
-const popupDelete = document.querySelector(".popup_type_delete");
 
 const profile = document.querySelector(".profile");
 const profileEditButton = profile.querySelector(".profile__edit-button");
@@ -31,7 +30,6 @@ export {
   popupAdd,
   popupEdit,
   popupAvatar,
-  popupDelete,
   profile,
   profileEditButton,
   cardAddButton,

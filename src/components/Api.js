@@ -15,12 +15,6 @@ export default class Api {
   };
 
   getCards() {
-    fetch(`${this._address}/users/`, {
-      headers: this._headers,
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-
     return fetch(`${this._address}/cards`, {
       headers: this._headers,
     }).then(this._handleResponse);
