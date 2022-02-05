@@ -85,12 +85,14 @@ api
   });
 
 function getCardElement(place) {
+  const userId = userInfo.getUserInfo().userId;
   const cardElement = new Card(
     place,
     "#place-template",
     () => popupImageClass.open(place),
-    userInfo.getUserInfo().userId,
-    (evt, cardId) => popupDeleteClass.open(evt, cardId)
+    userId,
+    (cardId, card) => popupDeleteClass.open(cardId, card),
+    api
   );
   return cardElement.generateCard();
 }
@@ -122,10 +124,10 @@ function addFormSubmit(evt, inputItems) {
 
 function deleteCard(evt, cardId, card) {
   evt.preventDefault();
-  // api
-  //   .deleteCard(cardId)
-  //   .then((data) => console.log(data))
-  //   .catch((err) => console.log(err));
+  api
+    .deleteCard(cardId)
+    .then((data) => console.log(data))
+    .catch((err) => console.log(err));
   card.remove();
   popupDeleteClass.close();
 }

@@ -15,6 +15,12 @@ export default class Api {
   };
 
   getCards() {
+    fetch(`${this._address}/users/`, {
+      headers: this._headers,
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+
     return fetch(`${this._address}/cards`, {
       headers: this._headers,
     }).then(this._handleResponse);
@@ -51,6 +57,27 @@ export default class Api {
   deleteCard(id) {
     return fetch(`${this._address}/cards/${id}`, {
       method: "DELETE",
+      headers: this._headers,
+    }).then(this._handleResponse);
+  }
+
+  putLike(id) {
+    return fetch(`${this._address}/cards/${id}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    }).then(this._handleResponse);
+  }
+
+  deleteLike(id) {
+    return fetch(`${this._address}/cards/${id}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then(this._handleResponse);
+  }
+
+  patchAvatar() {
+    return fetch(`${this._address}/users/me/avatar`, {
+      method: "PATCH",
       headers: this._headers,
     }).then(this._handleResponse);
   }

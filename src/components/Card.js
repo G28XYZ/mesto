@@ -4,7 +4,8 @@ export class Card {
     template,
     handleCardClick,
     userId,
-    onOpenPopupDelete
+    onOpenPopupDelete,
+    api
   ) {
     this._name = name;
     this._link = link;
@@ -13,8 +14,10 @@ export class Card {
     this._cardId = _id;
     this._onOpenPopup = handleCardClick;
     this._likesLength = likes.length;
+    this._isLiked = likes.some((like) => userId === like._id);
     this._isUserCard = owner._id === userId;
     this._onOpenPopupDelete = onOpenPopupDelete;
+    this._api = api;
   }
 
   _getTemplate() {
@@ -33,14 +36,42 @@ export class Card {
     this._onOpenPopupDelete(this._cardId, this._card);
   };
 
-  _handleToggleLike = (evt) => {
-    evt.target.classList.toggle("place__like_active");
+  _removeLike(evt) {
+    evt.target.classList.remove("place__like_active");
+    this._api
+      .deleteLike(this._cardId)
+      .then((message) => {
+        console.log(message);
+        this._likeCount.textContent = message.likes.length;
+      })
+      .catch((err) => console.log(`Ошибка удаления лайка: ${err}`));
+    this._isLiked = false;
+  }
+
+  _addLike(evt) {
+    evt.target.classList.add("place__like_active");
+    this._api
+      .putLike(this._cardId)
+      .then((message) => {
+        console.log(message);
+        this._likeCount.textContent = message.likes.length;
+      })
+      .catch((err) => console.log(`Ошибка добавления лайка: ${err}`));
+    this._isLiked = true;
+  }
+
+  _handleClickLike = (evt) => {
+    if (this._isLiked) {
+      this._removeLike(evt);
+    } else {
+      this._addLike(evt);
+    }
   };
 
   _setHandlerListeners() {
     this._card
       .querySelector(".place__like")
-      .addEventListener("click", this._handleToggleLike);
+      .addEventListener("click", this._handleClickLike);
 
     this._card
       .querySelector(".place__delete")
@@ -52,12 +83,17 @@ export class Card {
   generateCard() {
     this._card = this._getTemplate();
     this._card.querySelector(".place__title").textContent = this._name;
-    this._card.querySelector(".place__like-count").textContent =
-      this._likesLength;
+    this._likeCount = this._card.querySelector(".place__like-count");
+    this._likeCount.textContent = this._likesLength;
     if (!this._isUserCard) {
       this._card
         .querySelector(".place__delete")
         .classList.add("place__delete_hidden");
+    }
+    if (this._isLiked) {
+      this._card
+        .querySelector(".place__like")
+        .classList.add("place__like_active");
     }
     this._image = this._card.querySelector(".place__image");
 
