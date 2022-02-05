@@ -105,7 +105,6 @@ function editFormSubmit(evt, inputItems) {
     .patchProfile(inputItems)
     .then((data) => {
       userInfo.setUserInfo(data);
-      avatar.src = data.avatar;
     })
     .catch((err) => console.log(`Ошибка редактирование профиля: ${err}`))
     .finally(() => {
@@ -133,7 +132,6 @@ function addFormSubmit(evt, inputItems) {
 
 function deleteCard(evt, cardId, card) {
   evt.preventDefault();
-  changeTypeButton(evt.target.querySelector(".popup__button"));
   api
     .deleteCard(cardId)
     .then((data) => console.log(data))
@@ -141,12 +139,20 @@ function deleteCard(evt, cardId, card) {
     .finally(() => {
       card.remove();
       popupDeleteClass.close();
-      changeTypeButton(evt.target.querySelector(".popup__button"), "Да");
     });
 }
 
-function editAvatar(evt) {
+function editAvatar(evt, { link }) {
   evt.preventDefault();
+  changeTypeButton(evt.target.querySelector(".popup__button"));
+  api
+    .patchAvatar(link)
+    .then((data) => userInfo.setUserInfo(data))
+    .catch((err) => console.log(`Ошибка при изменении аватар: ${err}`))
+    .finally(() => {
+      changeTypeButton(evt.target.querySelector(".popup__button"));
+      popupAvatarClass.close();
+    });
 }
 
 profileEditButton.addEventListener("click", () => {
