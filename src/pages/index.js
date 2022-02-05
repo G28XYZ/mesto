@@ -90,7 +90,7 @@ function getCardElement(place) {
     "#place-template",
     () => popupImageClass.open(place),
     userInfo.getUserInfo().userId,
-    () => popupDeleteClass.open(place._id)
+    (evt, cardId) => popupDeleteClass.open(evt, cardId)
   );
   return cardElement.generateCard();
 }
@@ -120,8 +120,13 @@ function addFormSubmit(evt, inputItems) {
   popupAddValidation.setDefaultForm();
 }
 
-function deleteCard(evt, cardId) {
+function deleteCard(evt, cardId, card) {
   evt.preventDefault();
+  // api
+  //   .deleteCard(cardId)
+  //   .then((data) => console.log(data))
+  //   .catch((err) => console.log(err));
+  card.remove();
   popupDeleteClass.close();
 }
 
