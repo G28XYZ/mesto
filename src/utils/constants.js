@@ -20,7 +20,6 @@ const profile = document.querySelector(".profile");
 const profileEditButton = profile.querySelector(".profile__edit-button");
 
 const cardAddButton = profile.querySelector(".profile__add-button");
-const avatar = profile.querySelector(".profile__avatar");
 const avatarContainer = profile.querySelector(".profile__avatar-container");
 
 export {
@@ -33,7 +32,6 @@ export {
   profile,
   profileEditButton,
   cardAddButton,
-  avatar,
   avatarContainer,
   initialCards,
 };

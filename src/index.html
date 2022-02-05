@@ -86,26 +86,28 @@
         ></button>
         <h3 class="popup__title">Редактировать профиль</h3>
         <form name="form" class="popup__form">
-          <input
-            placeholder="Имя"
-            type="text"
-            name="name"
-            class="popup__input popup__input_elem_name"
-            minlength="2"
-            maxlength="40"
-            required
-          />
-          <span class="popup__error popup__error-name"></span>
-          <input
-            placeholder="Работа"
-            type="text"
-            name="about"
-            class="popup__input popup__input_elem_about"
-            minlength="2"
-            maxlength="200"
-            required
-          />
-          <span class="popup__error popup__error-about"></span>
+          <div class="popup__input-container">
+            <input
+              placeholder="Имя"
+              type="text"
+              name="name"
+              class="popup__input popup__input_elem_name"
+              minlength="2"
+              maxlength="40"
+              required
+            />
+            <span class="popup__error popup__error-name"></span>
+            <input
+              placeholder="Работа"
+              type="text"
+              name="about"
+              class="popup__input popup__input_elem_about"
+              minlength="2"
+              maxlength="200"
+              required
+            />
+            <span class="popup__error popup__error-about"></span>
+          </div>
           <button type="submit" name="button-edit" class="popup__button">
             Сохранить
           </button>
@@ -122,24 +124,27 @@
         ></button>
         <h3 class="popup__title">Новое место</h3>
         <form name="form" class="popup__form">
-          <input
-            placeholder="Название"
-            type="text"
-            name="name"
-            required
-            class="popup__input popup__input_elem_name"
-            minlength="2"
-            maxlength="30"
-          />
-          <span class="popup__error popup__error-name"></span>
-          <input
-            placeholder="Ссылка на картинку"
-            type="url"
-            name="link"
-            required
-            class="popup__input popup__input_elem_link"
-          />
-          <span class="popup__error popup__error-link"></span>
+          <div class="popup__input-container">
+            <input
+              placeholder="Название"
+              type="text"
+              name="name"
+              required
+              class="popup__input popup__input_elem_name"
+              minlength="2"
+              maxlength="30"
+            />
+            <span class="popup__error popup__error-name"></span>
+            <input
+              placeholder="Ссылка на картинку"
+              type="url"
+              name="link"
+              required
+              class="popup__input popup__input_elem_link"
+            />
+            <span class="popup__error popup__error-link"></span>
+          </div>
+
           <button type="submit" name="button-add" class="popup__button">
             Создать
           </button>
@@ -168,14 +173,16 @@
         ></button>
         <h3 class="popup__title">Обновить аватар</h3>
         <form name="form" class="popup__form">
-          <input
-            placeholder="Ссылка на картинку"
-            type="url"
-            name="link"
-            required
-            class="popup__input popup__input_elem_link"
-          />
-          <span class="popup__error popup__error-link"></span>
+          <div class="popup__input-container">
+            <input
+              placeholder="Ссылка на картинку"
+              type="url"
+              name="link"
+              required
+              class="popup__input popup__input_elem_link"
+            />
+            <span class="popup__error popup__error-link"></span>
+          </div>
           <button type="submit" name="button-add" class="popup__button">
             Сохранить
           </button>

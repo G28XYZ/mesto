@@ -6,7 +6,6 @@ import {
   popupAvatar,
   profileEditButton,
   cardAddButton,
-  avatar,
   avatarContainer,
   token,
   address,
@@ -64,22 +63,25 @@ const cardsSection = new Section(
   ".gallery"
 );
 
+const getCards = () => {
+  api
+    .getCards()
+    .then((cards) => {
+      initialCards.push(...cards);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
+      cardsSection.renderItems();
+    });
+};
+
 api
   .getUserInfo()
   .then((data) => {
     userInfo.setUserInfo(data);
   })
-  .catch((err) => console.log(err));
-
-api
-  .getCards()
-  .then((cards) => {
-    initialCards.push(...cards);
-  })
-  .catch((err) => console.log(err))
-  .finally(() => {
-    cardsSection.renderItems();
-  });
+  .catch((err) => console.log(`Ошибка получения данных пользователя: ${err}`))
+  .finally(getCards);
 
 function getCardElement(place) {
   const cardElement = new Card(

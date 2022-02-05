@@ -1,6 +1,6 @@
 export class Card {
   constructor(
-    { name, link, likes = [], _id, owner },
+    { name, link, likes, _id, owner },
     template,
     handleCardClick,
     userId,
@@ -40,9 +40,8 @@ export class Card {
     evt.target.classList.remove("place__like_active");
     this._api
       .deleteLike(this._cardId)
-      .then((message) => {
-        console.log(message);
-        this._likeCount.textContent = message.likes.length;
+      .then((data) => {
+        this._likeCount.textContent = data.likes.length;
       })
       .catch((err) => console.log(`Ошибка удаления лайка: ${err}`));
     this._isLiked = false;
@@ -52,9 +51,8 @@ export class Card {
     evt.target.classList.add("place__like_active");
     this._api
       .putLike(this._cardId)
-      .then((message) => {
-        console.log(message);
-        this._likeCount.textContent = message.likes.length;
+      .then((data) => {
+        this._likeCount.textContent = data.likes.length;
       })
       .catch((err) => console.log(`Ошибка добавления лайка: ${err}`));
     this._isLiked = true;
@@ -73,9 +71,11 @@ export class Card {
       .querySelector(".place__like")
       .addEventListener("click", this._handleClickLike);
 
-    this._card
-      .querySelector(".place__delete")
-      .addEventListener("click", this._handleDeleteCard);
+    if (this._isUserCard) {
+      this._deleteButton.addEventListener("click", this._handleDeleteCard);
+    } else {
+      this._deleteButton.remove();
+    }
 
     this._image.addEventListener("click", this._handleOpenPopup);
   }
@@ -85,18 +85,16 @@ export class Card {
     this._card.querySelector(".place__title").textContent = this._name;
     this._likeCount = this._card.querySelector(".place__like-count");
     this._likeCount.textContent = this._likesLength;
-    if (!this._isUserCard) {
-      this._card
-        .querySelector(".place__delete")
-        .classList.add("place__delete_hidden");
-    }
+
+    this._deleteButton = this._card.querySelector(".place__delete");
+
     if (this._isLiked) {
       this._card
         .querySelector(".place__like")
         .classList.add("place__like_active");
     }
-    this._image = this._card.querySelector(".place__image");
 
+    this._image = this._card.querySelector(".place__image");
     this._image.src = this._link;
     this._image.alt = this._name;
 
