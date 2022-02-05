@@ -17,6 +17,7 @@ import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupDeleteCard from "../components/PopupDeleteCard";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api";
@@ -28,13 +29,16 @@ const api = new Api({
 
 const popupEditClass = new PopupWithForm(".popup_type_edit", editFormSubmit);
 const popupAddClass = new PopupWithForm(".popup_type_add", addFormSubmit);
-const popupAvatarClass = new PopupWithForm(".popup_type_avatar");
-const popupDeleteClass = new PopupWithForm(".popup_type_delete");
+const popupAvatarClass = new PopupWithForm(".popup_type_avatar", editAvatar);
+
+const popupDeleteClass = new PopupDeleteCard(".popup_type_delete", deleteCard);
 const popupImageClass = new PopupWithImage(".popup_type_image");
+
 popupEditClass.setEventListeners();
 popupAddClass.setEventListeners();
-popupImageClass.setEventListeners();
 popupAvatarClass.setEventListeners();
+
+popupImageClass.setEventListeners();
 popupDeleteClass.setEventListeners();
 
 const userInfo = new UserInfo({
@@ -85,7 +89,8 @@ function getCardElement(place) {
     place,
     "#place-template",
     () => popupImageClass.open(place),
-    userInfo.getUserInfo().userId
+    userInfo.getUserInfo().userId,
+    () => popupDeleteClass.open(place._id)
   );
   return cardElement.generateCard();
 }
@@ -115,7 +120,14 @@ function addFormSubmit(evt, inputItems) {
   popupAddValidation.setDefaultForm();
 }
 
-function editAvatar() {}
+function deleteCard(evt, cardId) {
+  evt.preventDefault();
+  popupDeleteClass.close();
+}
+
+function editAvatar(evt) {
+  evt.preventDefault();
+}
 
 profileEditButton.addEventListener("click", () => {
   popupEditClass.open(userInfo.getUserInfo());

@@ -3,7 +3,8 @@ export class Card {
     { name, link, likes = [], owner },
     template,
     handleCardClick,
-    userId
+    userId,
+    onOpenPopupDeleteCard
   ) {
     this._name = name;
     this._link = link;
@@ -12,6 +13,7 @@ export class Card {
     this._onOpenPopup = handleCardClick;
     this._likesLength = likes.length;
     this._isUserCard = owner._id === userId;
+    this._onOpenPopupDeleteCard = onOpenPopupDeleteCard;
   }
 
   _getTemplate() {
@@ -26,10 +28,6 @@ export class Card {
     this._onOpenPopup({ name: this._name, link: this._link });
   };
 
-  _handleDeleteCard = () => {
-    this._card.remove();
-  };
-
   _handleToggleLike = (evt) => {
     evt.target.classList.toggle("place__like_active");
   };
@@ -41,7 +39,7 @@ export class Card {
 
     this._card
       .querySelector(".place__delete")
-      .addEventListener("click", this._handleDeleteCard);
+      .addEventListener("click", this._onOpenPopupDeleteCard);
 
     this._image.addEventListener("click", this._handleOpenPopup);
   }
