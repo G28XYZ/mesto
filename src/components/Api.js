@@ -69,6 +69,10 @@ export default class Api {
     }).then(this._handleResponse);
   }
 
+  likeCard({ cardId, isLiked }) {
+    return isLiked ? this.deleteLike(cardId) : this.putLike(cardId);
+  }
+
   patchAvatar(avatar) {
     return fetch(`${this._address}/users/me/avatar`, {
       method: "PATCH",

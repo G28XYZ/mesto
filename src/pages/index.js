@@ -66,20 +66,21 @@ const cardsSection = new Section(
 const getCards = () => {
   api
     .getCards()
-    .then((cards) => {
-      initialCards.push(...cards.reverse());
-    })
+    .then((cards) => initialCards.push(...cards.reverse()))
     .catch((err) => console.log(err))
-    .finally(() => {
-      cardsSection.renderItems();
-    });
+    .finally(() => cardsSection.renderItems());
 };
+
+function handleLike(card) {
+  api
+    .likeCard(card.getCardInfo())
+    .then((res) => card.updateLike(res))
+    .catch((err) => console.log(`Ошибка обновления лайка: ${err}`));
+}
 
 api
   .getUserInfo()
-  .then((data) => {
-    userInfo.setUserInfo(data);
-  })
+  .then((data) => userInfo.setUserInfo(data))
   .catch((err) => console.log(`Ошибка получения данных пользователя: ${err}`))
   .finally(getCards);
 
@@ -90,7 +91,7 @@ function getCardElement(place) {
     () => popupImageClass.open(place),
     userInfo.getUserInfo().userId,
     (cardId, card) => popupDeleteClass.open(cardId, card),
-    { putLike: (id) => api.putLike(id), deleteLike: (id) => api.deleteLike(id) }
+    handleLike
   );
   return cardElement.generateCard();
 }
@@ -149,7 +150,7 @@ function editAvatar(evt, { link }) {
     .then((data) => userInfo.setUserInfo(data))
     .catch((err) => console.log(`Ошибка при изменении аватар: ${err}`))
     .finally(() => {
-      changeTypeButton(evt.target.querySelector(".popup__button"));
+      changeTypeButton(evt.target.querySelector(".popup__button"), "Сохранить");
       popupAvatarClass.close();
     });
 }

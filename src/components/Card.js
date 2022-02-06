@@ -5,7 +5,7 @@ export class Card {
     handleCardClick,
     userId,
     onOpenPopupDelete,
-    api
+    handleLike
   ) {
     this._name = name;
     this._link = link;
@@ -17,7 +17,7 @@ export class Card {
     this._isLiked = likes.some((like) => userId === like._id);
     this._isUserCard = owner._id === userId;
     this._onOpenPopupDelete = onOpenPopupDelete;
-    this._api = api;
+    this._handleLike = handleLike;
   }
 
   _getTemplate() {
@@ -28,6 +28,10 @@ export class Card {
     return cardElement;
   }
 
+  getCardInfo() {
+    return { cardId: this._cardId, isLiked: this._isLiked };
+  }
+
   _handleOpenPopup = () => {
     this._onOpenPopup({ name: this._name, link: this._link });
   };
@@ -36,40 +40,30 @@ export class Card {
     this._onOpenPopupDelete(this._cardId, this._card);
   };
 
-  _removeLike(evt) {
-    this._api
-      .deleteLike(this._cardId)
-      .then((data) => {
-        evt.target.classList.remove("place__like_active");
-        this._likeCount.textContent = data.likes.length;
-        this._isLiked = false;
-      })
-      .catch((err) => console.log(`Ошибка удаления лайка: ${err}`));
-  }
-
-  _addLike(evt) {
-    this._api
-      .putLike(this._cardId)
-      .then((data) => {
-        evt.target.classList.add("place__like_active");
-        this._isLiked = true;
-        this._likeCount.textContent = data.likes.length;
-      })
-      .catch((err) => console.log(`Ошибка добавления лайка: ${err}`));
-  }
-
-  _handleClickLike = (evt) => {
+  updateLike(data) {
     if (this._isLiked) {
-      this._removeLike(evt);
+      this._removeLike(data);
     } else {
-      this._addLike(evt);
+      this._addLike(data);
     }
-  };
+  }
+
+  _removeLike(data) {
+    this._like.classList.remove("place__like_active");
+    this._likeCount.textContent = data.likes.length;
+    this._isLiked = false;
+  }
+
+  _addLike(data) {
+    this._like.classList.add("place__like_active");
+    this._likeCount.textContent = data.likes.length;
+    this._isLiked = true;
+  }
 
   _setHandlerListeners() {
     this._card
       .querySelector(".place__like")
-      .addEventListener("click", this._handleClickLike);
+      .addEventListener("click", () => this._handleLike(this));
 
     if (this._isUserCard) {
       this._deleteButton.addEventListener("click", this._handleDeleteCard);
@@ -83,6 +77,7 @@ export class Card {
   generateCard() {
     this._card = this._getTemplate();
     this._card.querySelector(".place__title").textContent = this._name;
+    this._like = this._card.querySelector(".place__like");
     this._likeCount = this._card.querySelector(".place__like-count");
     this._likeCount.textContent = this._likesLength;
 
