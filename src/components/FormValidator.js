@@ -12,11 +12,14 @@ export class FormValidator {
     this._submitButton = this._form.querySelector(this._submitButtonSelector);
   }
 
-  setDefaultForm() {
-    this._toggleButton();
+  setDefaultForm(clearInput = true) {
     this._inputList.forEach((input) => {
       this._hideInputError(input);
+      if (clearInput) {
+        input.value = "";
+      }
     });
+    this._toggleButton();
   }
 
   _showInputError(input, errorMessage) {

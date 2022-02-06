@@ -25,9 +25,12 @@ const api = new Api({
   token,
 });
 
-const popupEditClass = new PopupWithForm(".popup_type_edit", editFormSubmit);
-const popupAddClass = new PopupWithForm(".popup_type_add", addFormSubmit);
-const popupAvatarClass = new PopupWithForm(".popup_type_avatar", editAvatar);
+const popupEditClass = new PopupWithForm(".popup_type_edit", handleEditForm);
+const popupAddClass = new PopupWithForm(".popup_type_add", handleAddForm);
+const popupAvatarClass = new PopupWithForm(
+  ".popup_type_avatar",
+  handleAvatarForm
+);
 
 const popupDeleteClass = new PopupDeleteCard(".popup_type_delete", deleteCard);
 const popupImageClass = new PopupWithImage(".popup_type_image");
@@ -53,26 +56,18 @@ popupEditValidation.enableValidation();
 popupAvatarValidation.enableValidation();
 
 const cardsSection = new Section(
-  {
-    items: initialCards,
-    renderer: (place) => getCardElement(place),
-  },
+  { renderer: (place) => getCardElement(place) },
   ".gallery"
 );
 
-const getCards = () => {
-  api
-    .getCards()
-    .then((cards) => initialCards.push(...cards.reverse()))
-    .catch((err) => console.log(err))
-    .finally(() => cardsSection.renderItems());
-};
-
-api
-  .getUserInfo()
-  .then((data) => userInfo.setUserInfo(data))
-  .catch((err) => console.log(`Ошибка получения данных пользователя: ${err}`))
-  .finally(getCards);
+Promise.all([api.getUserInfo(), api.getCards()])
+  .then(([userData, cards]) => {
+    userInfo.setUserInfo(userData);
+    cardsSection.renderItems(cards.reverse());
+  })
+  .catch((err) =>
+    console.log(`Ошибка получения данных пользователя/карточек: ${err}`)
+  );
 
 function getCardElement(place) {
   const cardElement = new Card(
@@ -93,31 +88,32 @@ function handleLike(card) {
     .catch((err) => console.log(`Ошибка обновления лайка: ${err}`));
 }
 
-function editFormSubmit(evt, inputItems) {
+function handleEditForm(evt, inputItems) {
   evt.preventDefault();
   popupEditClass.renderLoading(true);
   api
     .patchProfile(inputItems)
-    .then((data) => userInfo.setUserInfo(data))
+    .then((data) => {
+      userInfo.setUserInfo(data);
+      popupEditClass.close();
+    })
     .catch((err) => console.log(`Ошибка редактирование профиля: ${err}`))
     .finally(() => {
-      popupEditClass.close();
       popupEditClass.renderLoading(false, "Сохранить");
     });
 }
 
-function addFormSubmit(evt, inputItems) {
+function handleAddForm(evt, inputItems) {
   evt.preventDefault();
   popupAddClass.renderLoading(true);
   api
     .postCard(inputItems)
     .then((data) => {
       cardsSection.addItem(data);
+      popupAddClass.close();
     })
     .catch((err) => console.log(`Ошибка добавление карточки: ${err}`))
     .finally(() => {
-      popupAddClass.close();
-      popupAddValidation.setDefaultForm();
       popupAddClass.renderLoading(false, "Создать");
     });
 }
@@ -126,38 +122,41 @@ function deleteCard(evt, { cardId, card }) {
   evt.preventDefault();
   api
     .deleteCard(cardId)
-    .catch((err) => console.log(`Ошибка при удалении карточки: ${err}`))
-    .finally(() => {
+    .then(() => {
       card.remove();
       popupDeleteClass.close();
+    })
+    .catch((err) => {
+      console.log(`Ошибка при удалении карточки: ${err}`);
     });
 }
 
-function editAvatar(evt, { link }) {
+function handleAvatarForm(evt, { link }) {
   evt.preventDefault();
   popupAvatarClass.renderLoading(true);
   api
     .patchAvatar(link)
-    .then((data) => userInfo.setUserInfo(data))
+    .then((data) => {
+      userInfo.setUserInfo(data);
+      popupAvatarClass.close();
+    })
     .catch((err) => console.log(`Ошибка при изменении аватар: ${err}`))
     .finally(() => {
       popupAvatarClass.renderLoading(false, "Сохранить");
-      popupAvatarClass.close();
-      popupAvatarValidation.setDefaultForm();
     });
 }
 
 profileEditButton.addEventListener("click", () => {
   popupEditClass.open(userInfo.getUserInfo());
-  popupEditValidation.setDefaultForm();
+  popupEditValidation.setDefaultForm(false);
 });
 
 cardAddButton.addEventListener("click", () => {
-  popupAddClass.open();
   popupAddValidation.setDefaultForm();
+  popupAddClass.open();
 });
 
 avatarContainer.addEventListener("click", () => {
-  popupAvatarClass.open();
   popupAvatarValidation.setDefaultForm();
+  popupAvatarClass.open();
 });
