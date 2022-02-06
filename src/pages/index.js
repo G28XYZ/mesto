@@ -105,10 +105,7 @@ function editFormSubmit(evt, inputItems) {
   changeTypeButton(evt.target.querySelector(".popup__button"));
   api
     .patchProfile(inputItems)
-    .then((data) => {
-      userInfo.setUserInfo(data);
-      myconsole.log(123);
-    })
+    .then((data) => userInfo.setUserInfo(data))
     .catch((err) => console.log(`Ошибка редактирование профиля: ${err}`))
     .finally(() => {
       popupEditClass.close();
