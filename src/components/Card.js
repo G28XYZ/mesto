@@ -37,21 +37,25 @@ export class Card {
   };
 
   _removeLike(evt) {
-    evt.target.classList.remove("place__like_active");
     this._api
       .deleteLike(this._cardId)
-      .then((data) => (this._likeCount.textContent = data.likes.length))
+      .then((data) => {
+        evt.target.classList.remove("place__like_active");
+        this._likeCount.textContent = data.likes.length;
+        this._isLiked = false;
+      })
       .catch((err) => console.log(`Ошибка удаления лайка: ${err}`));
-    this._isLiked = false;
   }
 
   _addLike(evt) {
-    evt.target.classList.add("place__like_active");
     this._api
       .putLike(this._cardId)
-      .then((data) => (this._likeCount.textContent = data.likes.length))
+      .then((data) => {
+        evt.target.classList.add("place__like_active");
+        this._isLiked = true;
+        this._likeCount.textContent = data.likes.length;
+      })
       .catch((err) => console.log(`Ошибка добавления лайка: ${err}`));
-    this._isLiked = true;
   }
 
   _handleClickLike = (evt) => {
