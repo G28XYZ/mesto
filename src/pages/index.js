@@ -29,7 +29,7 @@ const popupEditClass = new PopupWithForm(".popup_type_edit", handleEditForm);
 const popupAddClass = new PopupWithForm(".popup_type_add", handleAddForm);
 const popupAvatarClass = new PopupWithForm(
   ".popup_type_avatar",
-  handleAvatarForm
+  handleEditAvatarForm
 );
 
 const popupDeleteClass = new PopupDeleteCard(".popup_type_delete", deleteCard);
@@ -131,7 +131,7 @@ function deleteCard(evt, { cardId, card }) {
     });
 }
 
-function handleAvatarForm(evt, { link }) {
+function handleEditAvatarForm(evt, { link }) {
   evt.preventDefault();
   popupAvatarClass.renderLoading(true);
   api
@@ -152,11 +152,11 @@ profileEditButton.addEventListener("click", () => {
 });
 
 cardAddButton.addEventListener("click", () => {
-  popupAddValidation.setDefaultForm();
   popupAddClass.open();
+  popupAddValidation.setDefaultForm();
 });
 
 avatarContainer.addEventListener("click", () => {
-  popupAvatarValidation.setDefaultForm();
   popupAvatarClass.open();
+  popupAvatarValidation.setDefaultForm();
 });

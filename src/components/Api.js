@@ -55,14 +55,14 @@ export default class Api {
     }).then(this._handleResponse);
   }
 
-  putLike(id) {
+  _putLike(id) {
     return fetch(`${this._address}/cards/${id}/likes`, {
       method: "PUT",
       headers: this._headers,
     }).then(this._handleResponse);
   }
 
-  deleteLike(id) {
+  _deleteLike(id) {
     return fetch(`${this._address}/cards/${id}/likes`, {
       method: "DELETE",
       headers: this._headers,
@@ -70,7 +70,7 @@ export default class Api {
   }
 
   likeCard({ cardId, isLiked }) {
-    return isLiked ? this.deleteLike(cardId) : this.putLike(cardId);
+    return isLiked ? this._deleteLike(cardId) : this._putLike(cardId);
   }
 
   patchAvatar(avatar) {
