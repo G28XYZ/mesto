@@ -9,7 +9,6 @@ import {
   avatarContainer,
   token,
   address,
-  initialCards,
 } from "../utils/constants.js";
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
