@@ -67,7 +67,7 @@ const getCards = () => {
   api
     .getCards()
     .then((cards) => {
-      initialCards.push(...cards);
+      initialCards.push(...cards.reverse());
     })
     .catch((err) => console.log(err))
     .finally(() => {
@@ -107,6 +107,7 @@ function editFormSubmit(evt, inputItems) {
     .patchProfile(inputItems)
     .then((data) => {
       userInfo.setUserInfo(data);
+      myconsole.log(123);
     })
     .catch((err) => console.log(`Ошибка редактирование профиля: ${err}`))
     .finally(() => {
@@ -136,8 +137,7 @@ function deleteCard(evt, cardId, card) {
   evt.preventDefault();
   api
     .deleteCard(cardId)
-    .then((data) => console.log(data))
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(`Ошибка при удалении карточки: ${err}`))
     .finally(() => {
       card.remove();
       popupDeleteClass.close();
