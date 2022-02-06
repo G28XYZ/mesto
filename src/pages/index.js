@@ -55,10 +55,7 @@ popupAvatarValidation.enableValidation();
 const cardsSection = new Section(
   {
     items: initialCards,
-    renderer: (place) => {
-      const card = getCardElement(place);
-      cardsSection.addItem(card);
-    },
+    renderer: (place) => getCardElement(place),
   },
   ".gallery"
 );
