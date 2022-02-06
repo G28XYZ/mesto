@@ -5,6 +5,7 @@ class PopupWithForm extends Popup {
     super(popupSelector);
     this._onSubmit = onSubmit;
     this._popupForm = this._popup.querySelector(".popup__form");
+    this._submitButton = this._popupForm.querySelector(".popup__button");
     this._inputList = Array.from(
       this._popupForm.querySelectorAll(".popup__input")
     );
@@ -21,16 +22,23 @@ class PopupWithForm extends Popup {
     this._onSubmit(evt, this._getInputValues());
   };
 
+  renderLoading(isLoading, buttonText = "Сохранение...") {
+    this._submitButton.disabled = isLoading;
+    this._submitButton.textContent = buttonText;
+  }
+
   setEventListeners() {
     super.setEventListeners();
     this._popupForm.addEventListener("submit", this._onSubmitHandler);
   }
 
-  open(inputValues = {}) {
+  open(inputValues) {
     super.open();
-    this._inputList.forEach((input) => {
-      input.value = inputValues[input.name] || "";
-    });
+    if (inputValues) {
+      this._inputList.forEach((input) => {
+        input.value = inputValues[input.name] || "";
+      });
+    }
   }
 
   close() {

@@ -71,13 +71,6 @@ const getCards = () => {
     .finally(() => cardsSection.renderItems());
 };
 
-function handleLike(card) {
-  api
-    .likeCard(card.getCardInfo())
-    .then((res) => card.updateLike(res))
-    .catch((err) => console.log(`Ошибка обновления лайка: ${err}`));
-}
-
 api
   .getUserInfo()
   .then((data) => userInfo.setUserInfo(data))
@@ -96,27 +89,29 @@ function getCardElement(place) {
   return cardElement.generateCard();
 }
 
-function changeTypeButton(button, text = "Сохранение...") {
-  button.disabled = !button.disabled;
-  button.textContent = text;
+function handleLike(card) {
+  api
+    .likeCard(card.getCardInfo())
+    .then((res) => card.updateLike(res))
+    .catch((err) => console.log(`Ошибка обновления лайка: ${err}`));
 }
 
 function editFormSubmit(evt, inputItems) {
   evt.preventDefault();
-  changeTypeButton(evt.target.querySelector(".popup__button"));
+  popupEditClass.renderLoading(true);
   api
     .patchProfile(inputItems)
     .then((data) => userInfo.setUserInfo(data))
     .catch((err) => console.log(`Ошибка редактирование профиля: ${err}`))
     .finally(() => {
       popupEditClass.close();
-      changeTypeButton(evt.target.querySelector(".popup__button"), "Сохранить");
+      popupEditClass.renderLoading(false, "Сохранить");
     });
 }
 
 function addFormSubmit(evt, inputItems) {
   evt.preventDefault();
-  changeTypeButton(evt.target.querySelector(".popup__button"));
+  popupAddClass.renderLoading(true);
   api
     .postCard(inputItems)
     .then((data) => {
@@ -127,7 +122,7 @@ function addFormSubmit(evt, inputItems) {
     .finally(() => {
       popupAddClass.close();
       popupAddValidation.setDefaultForm();
-      changeTypeButton(evt.target.querySelector(".popup__button"), "Создать");
+      popupAddClass.renderLoading(false, "Создать");
     });
 }
 
@@ -144,14 +139,15 @@ function deleteCard(evt, { cardId, card }) {
 
 function editAvatar(evt, { link }) {
   evt.preventDefault();
-  changeTypeButton(evt.target.querySelector(".popup__button"));
+  popupAvatarClass.renderLoading(true);
   api
     .patchAvatar(link)
     .then((data) => userInfo.setUserInfo(data))
     .catch((err) => console.log(`Ошибка при изменении аватар: ${err}`))
     .finally(() => {
-      changeTypeButton(evt.target.querySelector(".popup__button"), "Сохранить");
+      popupAvatarClass.renderLoading(false, "Сохранить");
       popupAvatarClass.close();
+      popupAvatarValidation.setDefaultForm();
     });
 }
 
