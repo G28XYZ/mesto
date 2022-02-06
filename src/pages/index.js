@@ -90,7 +90,7 @@ function getCardElement(place) {
     () => popupImageClass.open(place),
     userInfo.getUserInfo().userId,
     (cardId, card) => popupDeleteClass.open(cardId, card),
-    api
+    { putLike: (id) => api.putLike(id), deleteLike: (id) => api.deleteLike(id) }
   );
   return cardElement.generateCard();
 }
