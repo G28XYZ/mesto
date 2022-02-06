@@ -130,7 +130,7 @@ function addFormSubmit(evt, inputItems) {
     });
 }
 
-function deleteCard(evt, cardId, card) {
+function deleteCard(evt, { cardId, card }) {
   evt.preventDefault();
   api
     .deleteCard(cardId)
