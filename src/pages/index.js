@@ -112,8 +112,7 @@ function addFormSubmit(evt, inputItems) {
   api
     .postCard(inputItems)
     .then((data) => {
-      const card = getCardElement(data);
-      cardsSection.addItem(card);
+      cardsSection.addItem(data);
     })
     .catch((err) => console.log(`Ошибка добавление карточки: ${err}`))
     .finally(() => {
